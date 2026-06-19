@@ -31,12 +31,9 @@ export default function Hero({ onSearch }: HeroProps) {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Main content */}
-      <div className="relative z-10 flex flex-col flex-1 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-36 pb-10">
-
-        {/* Hero text */}
-        <div className="flex-1 flex flex-col justify-center max-w-[580px]">
-
+      {/* Text content — upper portion */}
+      <div className="flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 sm:px-8 lg:px-12 pt-32">
+        <div className="max-w-[580px]">
           <motion.p
             {...fadeUp(0)}
             className="text-brand-dark text-[11px] sm:text-xs font-bold tracking-[0.28em] uppercase mb-4"
@@ -74,17 +71,17 @@ export default function Hero({ onSearch }: HeroProps) {
             </button>
           </motion.div>
         </div>
-
-        {/* Booking bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.45 }}
-          className="mt-10 md:mt-14"
-        >
-          <BookingBar onSearch={onSearch} />
-        </motion.div>
       </div>
+
+      {/* Booking bar — pinned to bottom of hero */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.45 }}
+        className="w-full pb-8 pt-4"
+      >
+        <BookingBar onSearch={onSearch} />
+      </motion.div>
     </section>
   )
 }
