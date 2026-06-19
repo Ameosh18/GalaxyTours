@@ -26,7 +26,7 @@ export default function Hero({ onSearch }: HeroProps) {
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{
         backgroundImage: `
-          linear-gradient(105deg, rgba(5,20,12,0.62) 0%, rgba(8,28,18,0.38) 45%, rgba(8,28,18,0.12) 100%),
+          linear-gradient(105deg, rgba(5,20,12,0.38) 0%, rgba(8,28,18,0.12) 55%, rgba(8,28,18,0.0) 100%),
           url('${basePath}/images/hero.jpg')
         `,
         backgroundSize: 'cover',
@@ -55,12 +55,12 @@ export default function Hero({ onSearch }: HeroProps) {
           <motion.h1
             {...fadeUp(0.12)}
             className="font-display font-bold text-white text-[2.6rem] sm:text-[3.4rem] lg:text-[4rem] leading-[1.1] mb-5"
-            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.35)' }}
+            style={{ textShadow: '0 2px 16px rgba(0,0,0,0.5)' }}
           >
             Your Journey,<br />Our Galaxy
           </motion.h1>
 
-          <motion.p {...fadeUp(0.22)} className="text-white/80 text-[15px] sm:text-base leading-relaxed mb-8 max-w-md">
+          <motion.p {...fadeUp(0.22)} className="text-white/90 text-[15px] sm:text-base leading-relaxed mb-8 max-w-md" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
             Reliable cab service in Dehradun for outstation trips,
             local travel, and unforgettable experiences.
           </motion.p>
@@ -85,7 +85,7 @@ export default function Hero({ onSearch }: HeroProps) {
             {['Hill-Expert Drivers', 'Sanitized Cabs', 'GPS Tracked', '24/7 Support'].map((b) => (
               <span
                 key={b}
-                className="text-[11px] font-medium text-white/80 bg-white/10 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm"
+                className="text-[11px] font-medium text-white/90 bg-black/20 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm"
               >
                 ✓ {b}
               </span>
