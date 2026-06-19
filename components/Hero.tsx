@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Car, IndianRupee } from 'lucide-react'
+import { Car, CalendarDays } from 'lucide-react'
 import BookingBar from './BookingBar'
 
 interface HeroProps {
@@ -9,9 +9,9 @@ interface HeroProps {
 }
 
 const fadeUp = (delay = 0) => ({
-  initial:   { opacity: 0, y: 32 },
+  initial:   { opacity: 0, y: 28 },
   animate:   { opacity: 1, y: 0 },
-  transition: { duration: 0.65, ease: 'easeOut', delay },
+  transition: { duration: 0.6, ease: 'easeOut', delay },
 })
 
 export default function Hero({ onSearch }: HeroProps) {
@@ -32,61 +32,55 @@ export default function Hero({ onSearch }: HeroProps) {
       }}
     >
       {/* Main content */}
-      <div className="relative z-10 flex flex-col flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-10">
+      <div className="relative z-10 flex flex-col flex-1 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-36 pb-10">
 
-        {/* Hero text — left-aligned, max half-width on desktop */}
-        <div className="flex-1 flex flex-col justify-center max-w-xl">
-          <motion.p {...fadeUp(0)} className="text-[#74C69D] text-[11px] sm:text-xs font-bold tracking-[0.32em] uppercase mb-4">
+        {/* Hero text */}
+        <div className="flex-1 flex flex-col justify-center max-w-[580px]">
+
+          <motion.p
+            {...fadeUp(0)}
+            className="text-brand-dark text-[11px] sm:text-xs font-bold tracking-[0.28em] uppercase mb-4"
+          >
             Dehradun to Every Destination
           </motion.p>
 
           <motion.h1
-            {...fadeUp(0.12)}
-            className="font-display font-bold text-white text-[2.6rem] sm:text-[3.4rem] lg:text-[4rem] leading-[1.1] mb-5"
-            style={{ textShadow: '0 2px 16px rgba(0,0,0,0.5)' }}
+            {...fadeUp(0.1)}
+            className="font-display font-bold text-ink-dark text-[3rem] sm:text-[4rem] lg:text-[4.75rem] leading-[1.08] mb-5"
           >
             Your Journey,<br />Our Galaxy
           </motion.h1>
 
-          <motion.p {...fadeUp(0.22)} className="text-white/90 text-[15px] sm:text-base leading-relaxed mb-8 max-w-md" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>
+          <motion.p
+            {...fadeUp(0.2)}
+            className="text-ink-body text-[15px] sm:text-[16px] leading-relaxed mb-9 max-w-[420px]"
+          >
             Reliable cab service in Dehradun for outstation trips,
             local travel, and unforgettable experiences.
           </motion.p>
 
-          <motion.div {...fadeUp(0.32)} className="flex flex-wrap gap-3 mb-10">
+          <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-3">
             <button
               onClick={() => scrollTo('#home')}
-              className="flex items-center gap-2 rounded-full bg-brand-dark text-white px-6 py-3 text-sm font-semibold shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all"
+              className="flex items-center gap-2 rounded-full bg-brand-dark text-white px-7 py-3.5 text-[14px] font-semibold shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all"
             >
               <Car size={16} /> Book a Ride
             </button>
             <button
               onClick={() => scrollTo('#pricing')}
-              className="flex items-center gap-2 rounded-full bg-white/15 border border-white/40 text-white px-6 py-3 text-sm font-semibold backdrop-blur-sm hover:bg-white/25 transition-all"
+              className="flex items-center gap-2 rounded-full border-2 border-brand-dark text-brand-dark bg-white/60 backdrop-blur-sm px-7 py-3.5 text-[14px] font-semibold hover:bg-white/80 transition-all"
             >
-              <IndianRupee size={15} /> Request Pricing
+              <CalendarDays size={15} /> Request Pricing
             </button>
-          </motion.div>
-
-          {/* Trust chips */}
-          <motion.div {...fadeUp(0.42)} className="flex flex-wrap gap-2">
-            {['Hill-Expert Drivers', 'Sanitized Cabs', 'GPS Tracked', '24/7 Support'].map((b) => (
-              <span
-                key={b}
-                className="text-[11px] font-medium text-white/90 bg-black/20 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm"
-              >
-                ✓ {b}
-              </span>
-            ))}
           </motion.div>
         </div>
 
-        {/* Booking bar — pinned near bottom */}
+        {/* Booking bar */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.55 }}
-          className="mt-10 md:mt-16"
+          transition={{ duration: 0.55, delay: 0.45 }}
+          className="mt-10 md:mt-14"
         >
           <BookingBar onSearch={onSearch} />
         </motion.div>
