@@ -11,41 +11,37 @@ interface PopularRoutesProps {
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show:   { transition: { staggerChildren: 0.1 } },
 }
 
 const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 28 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.48, ease: 'easeOut' } },
 }
 
 export default function PopularRoutes({ onBook }: PopularRoutesProps) {
   return (
-    <section id="services" className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-surface-off">
       <div className="max-w-7xl mx-auto">
-        {/* Section header */}
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.55 }}
           className="text-center mb-12"
         >
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <MapPin size={16} className="text-galaxy-green" />
-            <span className="text-galaxy-green text-xs font-semibold tracking-[0.25em] uppercase">
-              Popular Routes
-            </span>
+          <div className="inline-flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-mid px-4 py-1.5 rounded-full text-xs font-semibold mb-4">
+            <MapPin size={12} /> Popular Routes
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-galaxy-text mb-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink-dark mb-3">
             Top Himalayan Destinations
           </h2>
-          <p className="text-galaxy-muted text-base max-w-lg mx-auto">
-            Hand-picked routes through Uttarakhand with experienced hill drivers
+          <p className="text-ink-muted text-base max-w-md mx-auto">
+            Hand-picked routes with experienced hill drivers
           </p>
         </motion.div>
 
-        {/* Route Cards Grid */}
         <motion.div
           variants={container}
           initial="hidden"

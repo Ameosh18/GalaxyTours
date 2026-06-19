@@ -1,15 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import StarBackground from '@/components/StarBackground'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import PopularRoutes from '@/components/PopularRoutes'
 import CustomTripPlanner from '@/components/CustomTripPlanner'
 import VehicleModal from '@/components/VehicleModal'
-import { type Route } from '@/lib/data'
-import { Phone, MessageCircle, Mail, MapPin } from 'lucide-react'
-import { PHONE_NUMBER, WHATSAPP_NUMBER } from '@/lib/data'
+import { type Route, PHONE_NUMBER, PHONE_RAW, WHATSAPP_NUMBER } from '@/lib/data'
+import { MessageCircle, Phone, MapPin } from 'lucide-react'
 
 interface BookingDetails {
   pickup: string
@@ -18,7 +16,7 @@ interface BookingDetails {
   cabType: string
 }
 
-const PRICING_ROWS = [
+const PRICING = [
   { route: 'Dehradun → Mussoorie', sedan: '₹2,800', suv: '₹3,800', distance: '290 km' },
   { route: 'Dehradun → Rishikesh', sedan: '₹3,200', suv: '₹4,200', distance: '240 km' },
   { route: 'Dehradun → Haridwar',  sedan: '₹2,600', suv: '₹3,500', distance: '210 km' },
@@ -26,74 +24,61 @@ const PRICING_ROWS = [
 ]
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen,    setIsModalOpen]    = useState(false)
   const [bookingDetails, setBookingDetails] = useState<BookingDetails>({
-    pickup: 'Dehradun',
-    dropoff: '',
-    date: '',
-    cabType: 'Any Type',
+    pickup: 'Dehradun', dropoff: '', date: '', cabType: 'Select type',
   })
 
-  const handleSearch = (details: BookingDetails) => {
-    setBookingDetails(details)
+  const handleSearch = (d: BookingDetails) => {
+    setBookingDetails(d)
     setIsModalOpen(true)
   }
 
   const handleRouteBook = (route: Route) => {
-    setBookingDetails((prev) => ({ ...prev, dropoff: route.name }))
+    setBookingDetails((p) => ({ ...p, dropoff: route.name }))
     setIsModalOpen(true)
   }
 
-  const handleWhatsApp = () => {
-    const msg = encodeURIComponent('Hi Galaxy Travels, I want to get a pricing quote for my trip.')
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
-  }
+  const openWhatsApp = (msg = 'Hi Galaxy Travels, I want to book a cab.') =>
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer')
 
   return (
-    <main className="relative">
-      <StarBackground />
+    <main>
       <Navbar />
-
       <Hero onSearch={handleSearch} />
-
       <PopularRoutes onBook={handleRouteBook} />
-
       <CustomTripPlanner />
 
-      {/* Pricing Section */}
-      <section id="pricing" className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+      {/* ── Pricing ── */}
+      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-surface-off">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <span className="text-galaxy-green text-xs font-semibold tracking-[0.25em] uppercase">Transparent Pricing</span>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-galaxy-text mt-2 mb-3">
-              No Hidden Charges
-            </h2>
-            <p className="text-galaxy-muted text-base">Fixed fares, GST included. What you see is what you pay.</p>
+            <div className="inline-flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-mid px-4 py-1.5 rounded-full text-xs font-semibold mb-4">
+              Transparent Pricing
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink-dark mb-2">No Hidden Charges</h2>
+            <p className="text-ink-muted text-base">Fixed fares, GST included. What you see is what you pay.</p>
           </div>
 
-          <div className="glass rounded-2xl overflow-hidden">
+          <div className="bg-white border border-surface-border rounded-2xl overflow-hidden shadow-card">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-galaxy-border">
-                    <th className="text-left px-5 py-4 text-galaxy-muted font-semibold text-xs uppercase tracking-wide">Route</th>
-                    <th className="text-left px-5 py-4 text-galaxy-muted font-semibold text-xs uppercase tracking-wide">Distance</th>
-                    <th className="text-left px-5 py-4 text-galaxy-muted font-semibold text-xs uppercase tracking-wide">Sedan</th>
-                    <th className="text-left px-5 py-4 text-galaxy-muted font-semibold text-xs uppercase tracking-wide">SUV</th>
+                <thead className="bg-surface-off">
+                  <tr className="border-b border-surface-border">
+                    {['Route', 'Distance', 'Sedan', 'SUV'].map((h) => (
+                      <th key={h} className="text-left px-5 py-3.5 text-ink-muted font-semibold text-[11px] uppercase tracking-wide">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {PRICING_ROWS.map((row, i) => (
-                    <tr
-                      key={row.route}
-                      className={`border-b border-galaxy-border/50 hover:bg-galaxy-green/5 transition-colors ${
-                        i === PRICING_ROWS.length - 1 ? 'border-0' : ''
-                      }`}
-                    >
-                      <td className="px-5 py-4 font-medium text-galaxy-text">{row.route}</td>
-                      <td className="px-5 py-4 text-galaxy-muted">{row.distance}</td>
-                      <td className="px-5 py-4 text-galaxy-green font-semibold">{row.sedan}</td>
-                      <td className="px-5 py-4 text-galaxy-green font-semibold">{row.suv}</td>
+                  {PRICING.map((row, i) => (
+                    <tr key={row.route} className={`hover:bg-brand-50 transition-colors ${i < PRICING.length - 1 ? 'border-b border-surface-border' : ''}`}>
+                      <td className="px-5 py-4 font-medium text-ink-dark">{row.route}</td>
+                      <td className="px-5 py-4 text-ink-muted">{row.distance}</td>
+                      <td className="px-5 py-4 text-brand-dark font-semibold">{row.sedan}</td>
+                      <td className="px-5 py-4 text-brand-dark font-semibold">{row.suv}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -101,83 +86,81 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="text-galaxy-muted text-xs text-center mt-4">
-            * Prices are one-way. Return trip discounts available. Toll & parking extra.
+          <p className="text-ink-light text-xs text-center mt-3">
+            * One-way fares. Return trip discounts available. Toll & parking extra.
           </p>
 
           <div className="flex justify-center mt-6">
             <button
-              onClick={handleWhatsApp}
-              className="flex items-center gap-2 rounded-full bg-[#25D366] text-white px-6 py-3 font-semibold text-sm hover:shadow-[0_0_20px_rgba(37,211,102,0.3)] transition-all"
+              onClick={() => openWhatsApp('Hi Galaxy Travels, I want a custom pricing quote.')}
+              className="flex items-center gap-2 rounded-full bg-[#25D366] text-white px-6 py-3 font-semibold text-sm shadow-btn hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] transition-all"
             >
-              <MessageCircle size={16} /> Get Custom Quote
+              <MessageCircle size={15} /> Get Custom Quote
             </button>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+      {/* ── Contact ── */}
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="text-galaxy-green text-xs font-semibold tracking-[0.25em] uppercase">Get in Touch</span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-galaxy-text mt-2 mb-3">
+          <div className="inline-flex items-center gap-2 bg-brand-50 border border-brand-200 text-brand-mid px-4 py-1.5 rounded-full text-xs font-semibold mb-4">
+            Get in Touch
+          </div>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink-dark mb-2">
             We&apos;re Always Available
           </h2>
-          <p className="text-galaxy-muted text-base mb-10">
-            Available 24/7 for bookings, queries, and last-minute changes.
-          </p>
+          <p className="text-ink-muted text-base mb-10">Available 24/7 for bookings, queries, and last-minute changes.</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-            <a
-              href={`tel:${WHATSAPP_NUMBER}`}
-              className="glass rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-galaxy-green/40 hover:shadow-green-glow-sm transition-all group"
-            >
-              <div className="w-12 h-12 rounded-full bg-galaxy-green/10 flex items-center justify-center group-hover:bg-galaxy-green/20 transition-colors">
-                <Phone size={22} className="text-galaxy-green" />
-              </div>
-              <div>
-                <p className="text-galaxy-text font-semibold text-sm">Call Us</p>
-                <p className="text-galaxy-muted text-xs mt-1">{PHONE_NUMBER}</p>
-              </div>
-            </a>
-
-            <button
-              onClick={handleWhatsApp}
-              className="glass rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-galaxy-green/40 hover:shadow-green-glow-sm transition-all group"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#25D366]/10 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-colors">
-                <MessageCircle size={22} className="text-[#25D366]" />
-              </div>
-              <div>
-                <p className="text-galaxy-text font-semibold text-sm">WhatsApp</p>
-                <p className="text-galaxy-muted text-xs mt-1">Chat instantly</p>
-              </div>
-            </button>
-
-            <div className="glass rounded-2xl p-6 flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-galaxy-green/10 flex items-center justify-center">
-                <MapPin size={22} className="text-galaxy-green" />
-              </div>
-              <div>
-                <p className="text-galaxy-text font-semibold text-sm">Based In</p>
-                <p className="text-galaxy-muted text-xs mt-1">Dehradun, Uttarakhand</p>
-              </div>
-            </div>
+            {[
+              {
+                icon: <Phone size={22} className="text-brand-mid" />,
+                label: 'Call Us',
+                sub: PHONE_NUMBER,
+                action: () => window.open(`tel:${PHONE_RAW}`),
+              },
+              {
+                icon: <MessageCircle size={22} className="text-[#25D366]" />,
+                label: 'WhatsApp',
+                sub: 'Chat instantly',
+                action: () => openWhatsApp(),
+              },
+              {
+                icon: <MapPin size={22} className="text-brand-mid" />,
+                label: 'Based In',
+                sub: 'Dehradun, Uttarakhand',
+                action: undefined,
+              },
+            ].map((c) => (
+              <button
+                key={c.label}
+                onClick={c.action}
+                disabled={!c.action}
+                className="bg-surface-off border border-surface-border rounded-2xl p-6 flex flex-col items-center gap-3 hover:border-brand-sage hover:shadow-card-hover transition-all group disabled:cursor-default"
+              >
+                <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center group-hover:bg-brand-100 transition-colors">
+                  {c.icon}
+                </div>
+                <div>
+                  <p className="text-ink-dark font-semibold text-sm">{c.label}</p>
+                  <p className="text-ink-muted text-xs mt-0.5">{c.sub}</p>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-galaxy-border py-8 px-4 sm:px-6 lg:px-8 mb-14 md:mb-0">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-galaxy-muted text-xs">
+      {/* ── Footer ── */}
+      <footer className="border-t border-surface-border py-7 px-4 sm:px-6 lg:px-8 mb-14 md:mb-0 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-ink-muted text-xs">
           <p>© 2025 Galaxy Travels. All rights reserved.</p>
           <p>Dehradun, Uttarakhand · Premium Hill Cab Service</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-galaxy-green transition-colors">Privacy</a>
-            <a href="#" className="hover:text-galaxy-green transition-colors">Terms</a>
-            <button onClick={handleWhatsApp} className="hover:text-galaxy-green transition-colors flex items-center gap-1">
-              <Mail size={12} /> Contact
-            </button>
+            <a href="#" className="hover:text-brand-dark transition-colors">Privacy</a>
+            <a href="#" className="hover:text-brand-dark transition-colors">Terms</a>
+            <button onClick={() => openWhatsApp()} className="hover:text-brand-dark transition-colors">Contact</button>
           </div>
         </div>
       </footer>

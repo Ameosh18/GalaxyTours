@@ -3,63 +3,63 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    box-sizing: border-box;
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #F8FAF9;
+    color: #374151;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #0b101a;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #428643;
-    border-radius: 3px;
-  }
+  ::-webkit-scrollbar       { width: 6px; }
+  ::-webkit-scrollbar-track { background: #F1F5F2; }
+  ::-webkit-scrollbar-thumb { background: #40916C; border-radius: 3px; }
 
   input[type='date']::-webkit-calendar-picker-indicator {
-    filter: invert(1) sepia(1) saturate(3) hue-rotate(90deg);
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: pointer;
   }
 }
 
 @layer components {
-  .glass {
-    background: rgba(21, 28, 40, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(126, 232, 166, 0.12);
+  /* White glassmorphic navbar */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
   }
 
-  .glass-light {
-    background: rgba(255, 255, 255, 0.08);
+  /* White frosted booking bar */
+  .glass-bar {
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Section card */
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8E4;
+    border-radius: 1rem;
   }
 }
 
 @layer utilities {
-  .glow-green {
-    box-shadow: 0 0 20px rgba(126, 232, 166, 0.3), 0 0 40px rgba(126, 232, 166, 0.1);
-  }
-
   .text-gradient-green {
-    background: linear-gradient(135deg, #7ee8a6, #428643);
+    background: linear-gradient(135deg, #1B4332, #40916C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .hero-text-glow {
-    text-shadow: 0 0 30px rgba(126, 232, 166, 0.2), 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* Hero background — replace url() with your actual photo */
+  .hero-bg {
+    background-image:
+      linear-gradient(to right, rgba(10, 30, 20, 0.55) 0%, rgba(10, 30, 20, 0.2) 55%, rgba(10, 30, 20, 0.05) 100%),
+      url('/images/hero.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
   }
 }

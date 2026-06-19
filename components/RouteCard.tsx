@@ -9,65 +9,54 @@ interface RouteCardProps {
   onBook: (route: Route) => void
 }
 
-const GRADIENT_PLACEHOLDERS: Record<string, string> = {
-  mussoorie: 'from-green-900/80 via-emerald-800/60 to-teal-900/80',
-  rishikesh:  'from-blue-900/80 via-cyan-800/60 to-teal-900/80',
-  haridwar:   'from-orange-900/80 via-amber-800/60 to-yellow-900/80',
-  chopta:     'from-purple-900/80 via-indigo-800/60 to-blue-900/80',
+const BG: Record<string, string> = {
+  mussoorie: 'from-emerald-800 via-green-700   to-teal-800',
+  rishikesh:  'from-blue-800   via-cyan-700     to-teal-700',
+  haridwar:   'from-orange-800 via-amber-700    to-yellow-800',
+  chopta:     'from-violet-800 via-indigo-700   to-blue-800',
 }
 
 export default function RouteCard({ route, onBook }: RouteCardProps) {
-  const gradient = GRADIENT_PLACEHOLDERS[route.id] || 'from-galaxy-card/80 to-galaxy-bg/80'
-
   return (
     <motion.div
       whileHover={{ scale: 1.03, y: -4 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
       onClick={() => onBook(route)}
-      className="relative overflow-hidden rounded-2xl h-72 cursor-pointer group border border-galaxy-border hover:border-galaxy-green/40 hover:shadow-green-glow transition-all duration-300"
+      className="relative overflow-hidden rounded-2xl h-72 cursor-pointer group shadow-card hover:shadow-card-hover transition-shadow"
     >
-      {/* Placeholder gradient background (replace with next/image when real photos available) */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+      {/* Gradient placeholder (swap for next/image once photos available) */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${BG[route.id] ?? 'from-green-800 to-teal-800'}`} />
 
-      {/* Destination name as large watermark */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-10 select-none">
-        <span className="font-display font-bold text-6xl text-white">{route.name[0]}</span>
+      {/* Initial watermark letter */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.06] select-none pointer-events-none">
+        <span className="font-display font-black text-[8rem] text-white">{route.name[0]}</span>
       </div>
 
-      {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-      {/* Highlight badge */}
+      {/* Highlight pill */}
       <div className="absolute top-3 left-3">
-        <span className="text-[10px] font-semibold bg-galaxy-green/20 border border-galaxy-green/30 text-galaxy-green px-2 py-0.5 rounded-full backdrop-blur-sm">
+        <span className="text-[10px] font-semibold bg-white/20 backdrop-blur-sm border border-white/30 text-white px-2.5 py-0.5 rounded-full">
           {route.highlight}
         </span>
       </div>
 
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="font-display font-bold text-xl text-white mb-2">{route.name}</h3>
-
-        <div className="flex items-center gap-3 text-xs text-white/70 mb-3">
-          <span className="flex items-center gap-1">
-            <Clock size={11} /> {route.travelTime}
-          </span>
-          <span className="flex items-center gap-1">
-            <MapPin size={11} /> {route.distance}
-          </span>
+        <h3 className="font-display font-bold text-xl text-white mb-1.5">{route.name}</h3>
+        <div className="flex items-center gap-3 text-[11px] text-white/70 mb-3">
+          <span className="flex items-center gap-1"><Clock size={11} /> {route.travelTime}</span>
+          <span className="flex items-center gap-1"><MapPin size={11} /> {route.distance}</span>
         </div>
-
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-white/60 text-xs">Starting from</span>
-            <p className="text-galaxy-green font-bold text-base">
-              ₹{route.startingPrice.toLocaleString('en-IN')}
-            </p>
+            <span className="text-white/60 text-[10px]">Starting from</span>
+            <p className="text-white font-bold text-base">₹{route.startingPrice.toLocaleString('en-IN')}</p>
           </div>
-
           <motion.div
             whileHover={{ x: 4 }}
-            className="rounded-full bg-galaxy-forest/80 border border-galaxy-green/30 p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <ArrowRight size={14} className="text-white" />
           </motion.div>

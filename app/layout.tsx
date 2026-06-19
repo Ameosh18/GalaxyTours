@@ -20,14 +20,7 @@ export const metadata: Metadata = {
   title: 'Galaxy Travels — Premium Cab Service for Uttarakhand',
   description:
     'Book reliable, comfortable cabs from Dehradun to Mussoorie, Rishikesh, Haridwar, Chopta and all Himalayan destinations. Hill-expert drivers. Sanitized cabs.',
-  keywords: [
-    'cab service Dehradun',
-    'taxi Mussoorie',
-    'cab Rishikesh',
-    'Uttarakhand cab',
-    'hill cab service',
-    'Galaxy Travels',
-  ],
+  keywords: ['cab service Dehradun', 'taxi Mussoorie', 'cab Rishikesh', 'Uttarakhand cab'],
   authors: [{ name: 'Galaxy Travels' }],
   openGraph: {
     title: 'Galaxy Travels — Your Journey, Our Galaxy',
@@ -40,13 +33,13 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#0B101A',
+  themeColor: '#1B4332',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable} scroll-smooth`}>
-      <body className="bg-galaxy-bg text-galaxy-text font-sans min-h-screen antialiased">
+      <body className="bg-surface-off text-ink-body font-sans min-h-screen antialiased">
         {children}
         <StickyMobileFooter />
       </body>

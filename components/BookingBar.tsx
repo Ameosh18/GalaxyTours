@@ -7,13 +7,13 @@ interface BookingBarProps {
   onSearch: (details: { pickup: string; dropoff: string; date: string; cabType: string }) => void
 }
 
-const CAB_TYPES = ['Any Type', 'Hatchback', 'Sedan', 'SUV']
+const CAB_TYPES = ['Select type', 'Hatchback', 'Sedan', 'SUV']
 
 export default function BookingBar({ onSearch }: BookingBarProps) {
-  const [pickup, setPickup] = useState('Dehradun')
-  const [dropoff, setDropoff] = useState('')
-  const [date, setDate] = useState('')
-  const [cabType, setCabType] = useState('Any Type')
+  const [pickup,      setPickup]      = useState('Dehradun')
+  const [dropoff,     setDropoff]     = useState('')
+  const [date,        setDate]        = useState('')
+  const [cabType,     setCabType]     = useState('Select type')
   const [isDetecting, setIsDetecting] = useState(false)
 
   const today = new Date().toISOString().split('T')[0]
@@ -24,17 +24,16 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
-          const res = await fetch(
+          const res  = await fetch(
             `https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`
           )
           const data = await res.json()
-          const city =
+          setPickup(
             data.address?.city ||
             data.address?.town ||
             data.address?.village ||
-            data.address?.county ||
             'Current Location'
-          setPickup(city)
+          )
         } catch {
           setPickup('Current Location')
         } finally {
@@ -50,179 +49,162 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
     onSearch({ pickup, dropoff, date, cabType })
   }
 
-  const inputBase =
-    'bg-transparent outline-none text-galaxy-text placeholder-galaxy-muted text-sm w-full focus:text-galaxy-green transition-colors'
+  const divider = <div className="hidden md:block w-px h-10 bg-surface-border flex-shrink-0" />
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
-      {/* Desktop: single pill row */}
-      <div className="hidden md:flex items-center glass rounded-full px-2 py-2 gap-1 shadow-card">
+
+      {/* ── Desktop pill ── */}
+      <div className="hidden md:flex items-center glass-bar rounded-full shadow-bar px-2 py-2 gap-0">
+
         {/* Pickup */}
-        <div className="flex items-center gap-2 flex-1 px-4 py-2 group">
-          <button
-            onClick={detectLocation}
-            className="shrink-0 text-galaxy-green hover:text-galaxy-forest transition-colors"
-            title="Auto-detect location"
-          >
-            {isDetecting ? (
-              <Loader2 size={18} className="animate-spin" />
-            ) : (
-              <MapPin size={18} />
-            )}
-          </button>
-          <div className="flex flex-col min-w-0">
-            <span className="text-galaxy-muted text-[10px] font-semibold uppercase tracking-wide">
+        <div className="flex items-center gap-3 flex-1 px-5 py-2 group cursor-pointer" onClick={detectLocation}>
+          <div className="w-8 h-8 rounded-full bg-surface-input flex items-center justify-center shrink-0">
+            {isDetecting
+              ? <Loader2 size={15} className="animate-spin text-brand-mid" />
+              : <MapPin    size={15} className="text-brand-mid" />
+            }
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-0.5">
               Pickup Location
-            </span>
+            </p>
             <input
               type="text"
               value={pickup}
               onChange={(e) => setPickup(e.target.value)}
               placeholder="Dehradun"
-              className={inputBase}
+              className="block w-full text-[13px] font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light"
             />
           </div>
         </div>
 
-        <div className="w-px h-10 bg-galaxy-border" />
+        {divider}
 
         {/* Drop */}
-        <div className="flex items-center gap-2 flex-1 px-4 py-2">
-          <MapPin size={18} className="text-galaxy-green shrink-0" />
-          <div className="flex flex-col min-w-0">
-            <span className="text-galaxy-muted text-[10px] font-semibold uppercase tracking-wide">
+        <div className="flex items-center gap-3 flex-1 px-5 py-2">
+          <div className="w-8 h-8 rounded-full bg-surface-input flex items-center justify-center shrink-0">
+            <MapPin size={15} className="text-brand-mid" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-0.5">
               Drop Location
-            </span>
+            </p>
             <input
               type="text"
               value={dropoff}
               onChange={(e) => setDropoff(e.target.value)}
               placeholder="Where to?"
-              className={inputBase}
+              className="block w-full text-[13px] font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light"
             />
           </div>
         </div>
 
-        <div className="w-px h-10 bg-galaxy-border" />
+        {divider}
 
         {/* Date */}
-        <div className="flex items-center gap-2 flex-1 px-4 py-2">
-          <CalendarDays size={18} className="text-galaxy-green shrink-0" />
-          <div className="flex flex-col min-w-0">
-            <span className="text-galaxy-muted text-[10px] font-semibold uppercase tracking-wide">
+        <div className="flex items-center gap-3 flex-1 px-5 py-2">
+          <div className="w-8 h-8 rounded-full bg-surface-input flex items-center justify-center shrink-0">
+            <CalendarDays size={15} className="text-brand-mid" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-0.5">
               Travel Date
-            </span>
+            </p>
             <input
               type="date"
               value={date}
               min={today}
               onChange={(e) => setDate(e.target.value)}
-              className={`${inputBase} [color-scheme:dark]`}
+              className="block w-full text-[13px] font-semibold text-ink-dark bg-transparent outline-none [color-scheme:light]"
             />
           </div>
         </div>
 
-        <div className="w-px h-10 bg-galaxy-border" />
+        {divider}
 
-        {/* Cab Type */}
-        <div className="flex items-center gap-2 flex-1 px-4 py-2">
-          <Car size={18} className="text-galaxy-green shrink-0" />
-          <div className="flex flex-col min-w-0">
-            <span className="text-galaxy-muted text-[10px] font-semibold uppercase tracking-wide">
+        {/* Cab type */}
+        <div className="flex items-center gap-3 flex-1 px-5 py-2">
+          <div className="w-8 h-8 rounded-full bg-surface-input flex items-center justify-center shrink-0">
+            <Car size={15} className="text-brand-mid" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest mb-0.5">
               Cab Type
-            </span>
+            </p>
             <select
               value={cabType}
               onChange={(e) => setCabType(e.target.value)}
-              className={`${inputBase} cursor-pointer bg-transparent`}
+              className="block w-full text-[13px] font-semibold text-ink-dark bg-transparent outline-none cursor-pointer"
             >
               {CAB_TYPES.map((t) => (
-                <option key={t} value={t} className="bg-galaxy-card text-galaxy-text">
-                  {t}
-                </option>
+                <option key={t} value={t}>{t}</option>
               ))}
             </select>
           </div>
         </div>
 
-        {/* Search Button */}
+        {/* Search button */}
         <button
           onClick={handleSearch}
-          className="shrink-0 rounded-full bg-galaxy-forest text-white p-4 hover:shadow-green-glow hover:bg-galaxy-forest/90 transition-all ml-1"
+          className="ml-2 shrink-0 w-11 h-11 rounded-full bg-brand-dark text-white flex items-center justify-center shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all"
           aria-label="Search"
         >
-          <Search size={20} />
+          <Search size={18} />
         </button>
       </div>
 
-      {/* Mobile: 2x2 grid */}
-      <div className="md:hidden glass rounded-2xl p-4 shadow-card space-y-3">
+      {/* ── Mobile stacked ── */}
+      <div className="md:hidden glass-bar rounded-2xl shadow-bar p-4 space-y-3">
         <div className="grid grid-cols-2 gap-3">
-          {/* Pickup */}
-          <div className="flex items-center gap-2 bg-galaxy-card/50 rounded-xl px-3 py-2.5">
-            <button onClick={detectLocation}>
-              {isDetecting ? (
-                <Loader2 size={16} className="animate-spin text-galaxy-green" />
-              ) : (
-                <MapPin size={16} className="text-galaxy-green" />
-              )}
-            </button>
-            <div className="flex flex-col min-w-0">
-              <span className="text-galaxy-muted text-[9px] font-semibold uppercase">Pickup</span>
-              <input
-                type="text"
-                value={pickup}
-                onChange={(e) => setPickup(e.target.value)}
-                placeholder="Dehradun"
-                className={`${inputBase} text-xs`}
-              />
+          {[
+            { label: 'Pickup', icon: isDetecting ? <Loader2 size={14} className="animate-spin text-brand-mid" /> : <MapPin size={14} className="text-brand-mid" />, value: pickup, onChange: setPickup, ph: 'Dehradun', onClick: detectLocation },
+            { label: 'Drop',   icon: <MapPin size={14} className="text-brand-mid" />,        value: dropoff, onChange: setDropoff, ph: 'Where to?' },
+          ].map((f) => (
+            <div
+              key={f.label}
+              onClick={f.onClick}
+              className="flex items-center gap-2 bg-surface-input rounded-xl px-3 py-2.5"
+            >
+              {f.icon}
+              <div className="min-w-0">
+                <p className="text-[9px] font-semibold text-ink-muted uppercase tracking-wider">{f.label}</p>
+                <input
+                  type="text"
+                  value={f.value}
+                  onChange={(e) => f.onChange(e.target.value)}
+                  placeholder={f.ph}
+                  className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light"
+                />
+              </div>
             </div>
-          </div>
+          ))}
 
-          {/* Drop */}
-          <div className="flex items-center gap-2 bg-galaxy-card/50 rounded-xl px-3 py-2.5">
-            <MapPin size={16} className="text-galaxy-green shrink-0" />
-            <div className="flex flex-col min-w-0">
-              <span className="text-galaxy-muted text-[9px] font-semibold uppercase">Drop</span>
-              <input
-                type="text"
-                value={dropoff}
-                onChange={(e) => setDropoff(e.target.value)}
-                placeholder="Where to?"
-                className={`${inputBase} text-xs`}
-              />
-            </div>
-          </div>
-
-          {/* Date */}
-          <div className="flex items-center gap-2 bg-galaxy-card/50 rounded-xl px-3 py-2.5">
-            <CalendarDays size={16} className="text-galaxy-green shrink-0" />
-            <div className="flex flex-col min-w-0">
-              <span className="text-galaxy-muted text-[9px] font-semibold uppercase">Date</span>
+          <div className="flex items-center gap-2 bg-surface-input rounded-xl px-3 py-2.5">
+            <CalendarDays size={14} className="text-brand-mid shrink-0" />
+            <div className="min-w-0">
+              <p className="text-[9px] font-semibold text-ink-muted uppercase tracking-wider">Date</p>
               <input
                 type="date"
                 value={date}
                 min={today}
                 onChange={(e) => setDate(e.target.value)}
-                className={`${inputBase} text-xs [color-scheme:dark]`}
+                className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none [color-scheme:light]"
               />
             </div>
           </div>
 
-          {/* Cab Type */}
-          <div className="flex items-center gap-2 bg-galaxy-card/50 rounded-xl px-3 py-2.5">
-            <Car size={16} className="text-galaxy-green shrink-0" />
-            <div className="flex flex-col min-w-0">
-              <span className="text-galaxy-muted text-[9px] font-semibold uppercase">Cab</span>
+          <div className="flex items-center gap-2 bg-surface-input rounded-xl px-3 py-2.5">
+            <Car size={14} className="text-brand-mid shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-semibold text-ink-muted uppercase tracking-wider">Cab</p>
               <select
                 value={cabType}
                 onChange={(e) => setCabType(e.target.value)}
-                className={`${inputBase} text-xs cursor-pointer bg-transparent`}
+                className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none cursor-pointer"
               >
                 {CAB_TYPES.map((t) => (
-                  <option key={t} value={t} className="bg-galaxy-card">
-                    {t}
-                  </option>
+                  <option key={t} value={t}>{t}</option>
                 ))}
               </select>
             </div>
@@ -231,9 +213,9 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
 
         <button
           onClick={handleSearch}
-          className="w-full flex items-center justify-center gap-2 rounded-xl bg-galaxy-forest text-white py-3 font-semibold text-sm hover:shadow-green-glow transition-all"
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand-dark text-white py-3 font-semibold text-sm shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all"
         >
-          <Search size={16} /> Search Cabs
+          <Search size={15} /> Search Cabs
         </button>
       </div>
     </div>
