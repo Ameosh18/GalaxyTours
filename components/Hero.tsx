@@ -25,7 +25,7 @@ export default function Hero({ onSearch }: HeroProps) {
       id="home"
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{
-        backgroundImage: `url('${basePath}/images/hero.png')`,
+        backgroundImage: `url('${basePath}/images/galaxy_hero.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center 35%',
         backgroundRepeat: 'no-repeat',
