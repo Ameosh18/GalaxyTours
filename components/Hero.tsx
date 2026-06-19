@@ -25,24 +25,12 @@ export default function Hero({ onSearch }: HeroProps) {
       id="home"
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{
-        backgroundImage: `
-          linear-gradient(105deg, rgba(5,20,12,0.38) 0%, rgba(8,28,18,0.12) 55%, rgba(8,28,18,0.0) 100%),
-          url('${basePath}/images/hero.jpg')
-        `,
+        backgroundImage: `url('${basePath}/images/hero.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center 35%',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* CSS mountain scene fallback (behind bg image, visible when jpg absent) */}
-      <div className="absolute inset-0 -z-10" style={{
-        background: `
-          radial-gradient(ellipse 55% 40% at 18% 30%, rgba(255,180,50,0.55) 0%, transparent 70%),
-          radial-gradient(ellipse 70% 30% at 50% 65%, rgba(200,230,210,0.35) 0%, transparent 60%),
-          linear-gradient(175deg, #fde9b0 0%, #a8d8ea 20%, #6ab4d4 45%, #4a9960 60%, #2d6e45 72%, #1b4a30 82%, #0f2e1d 92%, #0a1f13 100%)
-        `
-      }} />
-
       {/* Main content */}
       <div className="relative z-10 flex flex-col flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-10">
 
