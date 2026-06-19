@@ -1,8 +1,10 @@
 
 
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   images: {
-    remotePatterns: [],
+    unoptimized: true,
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
