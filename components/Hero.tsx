@@ -18,14 +18,30 @@ export default function Hero({ onSearch }: HeroProps) {
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 
+  const basePath = process.env.NODE_ENV === 'production' ? '/GalaxyTours' : ''
+
   return (
     <section
       id="home"
-      /* hero-bg applies the mountain photo + left gradient overlay */
-      className="relative min-h-screen flex flex-col hero-bg overflow-hidden"
+      className="relative min-h-screen flex flex-col overflow-hidden"
+      style={{
+        backgroundImage: `
+          linear-gradient(105deg, rgba(5,20,12,0.62) 0%, rgba(8,28,18,0.38) 45%, rgba(8,28,18,0.12) 100%),
+          url('${basePath}/images/hero.jpg')
+        `,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 35%',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
-      {/* Fallback gradient for when hero.jpg is absent */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a2215] via-[#1a4a2a] to-[#2d7a50]" />
+      {/* CSS mountain scene fallback (behind bg image, visible when jpg absent) */}
+      <div className="absolute inset-0 -z-10" style={{
+        background: `
+          radial-gradient(ellipse 55% 40% at 18% 30%, rgba(255,180,50,0.55) 0%, transparent 70%),
+          radial-gradient(ellipse 70% 30% at 50% 65%, rgba(200,230,210,0.35) 0%, transparent 60%),
+          linear-gradient(175deg, #fde9b0 0%, #a8d8ea 20%, #6ab4d4 45%, #4a9960 60%, #2d6e45 72%, #1b4a30 82%, #0f2e1d 92%, #0a1f13 100%)
+        `
+      }} />
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-10">
