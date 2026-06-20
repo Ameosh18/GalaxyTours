@@ -39,7 +39,7 @@ export default function MobileBottomNav({ onBook }: MobileBottomNavProps) {
 
   return (
     <div
-      className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 md:hidden"
+      className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <nav className="flex items-end gap-1 bg-white rounded-full border border-surface-border px-3 py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.16),0_2px_8px_rgba(0,0,0,0.08)]">
