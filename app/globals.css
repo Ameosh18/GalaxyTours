@@ -4,11 +4,12 @@
 
 @layer base {
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     background-color: #F8FAF9;
     color: #374151;
+    overflow-x: hidden;
   }
 
   ::-webkit-scrollbar       { width: 6px; }
