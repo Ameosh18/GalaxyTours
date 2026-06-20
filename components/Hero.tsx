@@ -78,7 +78,7 @@ export default function Hero({ onSearch }: HeroProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.45 }}
-        className="w-full pb-28 md:pb-8 pt-4"
+        className="w-full pb-4 pt-4"
       >
         <BookingBar onSearch={onSearch} />
       </motion.div>

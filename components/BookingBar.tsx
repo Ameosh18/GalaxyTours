@@ -168,7 +168,7 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
       </div>
 
       {/* Mobile stacked */}
-      <div className="md:hidden glass-bar rounded-2xl shadow-bar p-4 space-y-3">
+      <div className="md:hidden glass-bar rounded-2xl shadow-bar p-4 space-y-3 mb-28">
         <div className="grid grid-cols-2 gap-3">
           {[
             { label: 'Pickup', icon: isDetecting ? <Loader2 size={14} className="animate-spin text-brand-mid" /> : <MapPin size={14} className="text-brand-mid" />, value: pickup, onChange: setPickup, ph: 'Dehradun', onClick: detectLocation },
