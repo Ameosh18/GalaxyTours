@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Menu, X, ArrowRight } from 'lucide-react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: 'Home',        href: '#home' },
@@ -13,39 +12,28 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled]   = useState(false)
-  const [isMenuOpen, setIsMenuOpen]   = useState(false)
-  const [activeLink, setActiveLink]   = useState('Home')
+  const [activeLink, setActiveLink] = useState('Home')
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    // no scroll handler needed for simplified navbar
   }, [])
 
   const handleNav = (href: string, label: string) => {
-    setIsMenuOpen(false)
     setActiveLink(label)
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
-      <div
-        className={`max-w-6xl mx-auto transition-all duration-300 rounded-2xl ${
-          isScrolled
-            ? 'glass-nav shadow-nav'
-            : 'glass-nav shadow-nav'
-        }`}
-      >
+      <div className="max-w-6xl mx-auto glass-nav shadow-nav rounded-2xl transition-all duration-300">
         <nav className="px-5 h-[60px] flex items-center justify-between gap-6">
-          {/* Logo */}
+
+          {/* Logo — always visible */}
           <a
             href="#home"
             onClick={(e) => { e.preventDefault(); handleNav('#home', 'Home') }}
             className="flex items-center gap-2 shrink-0"
           >
-            {/* Planet orbit SVG */}
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="17" cy="17" r="7" fill="#1B4332" />
               <ellipse cx="17" cy="17" rx="15" ry="5.5" stroke="#2D6A4F" strokeWidth="1.8" fill="none" />
@@ -58,7 +46,7 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop nav */}
+          {/* Desktop nav links — hidden on mobile */}
           <ul className="hidden md:flex items-center gap-6">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
@@ -76,57 +64,14 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Desktop CTA */}
+          {/* Desktop CTA — hidden on mobile */}
           <button
             onClick={() => handleNav('#home', 'Home')}
             className="hidden md:flex items-center gap-1.5 rounded-full bg-brand-dark text-white px-5 py-2.5 text-[13.5px] font-semibold shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all shrink-0"
           >
             Book a Cab <ArrowRight size={14} />
           </button>
-
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-ink-dark p-1"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </nav>
-
-        {/* Mobile drawer */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.22, ease: 'easeInOut' }}
-              className="md:hidden overflow-hidden border-t border-surface-border"
-            >
-              <ul className="flex flex-col p-4 gap-1">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.label}>
-                    <button
-                      onClick={() => handleNav(link.href, link.label)}
-                      className="w-full text-left px-3 py-2.5 text-ink-body hover:text-brand-dark hover:bg-brand-50 rounded-lg text-sm font-medium transition-colors"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-                <li className="pt-2">
-                  <button
-                    onClick={() => handleNav('#home', 'Home')}
-                    className="w-full flex items-center justify-center gap-1.5 rounded-full bg-brand-dark text-white px-5 py-3 text-sm font-semibold"
-                  >
-                    Book a Cab <ArrowRight size={14} />
-                  </button>
-                </li>
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </header>
   )

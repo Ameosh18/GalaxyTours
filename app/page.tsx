@@ -6,6 +6,7 @@ import Hero from '@/components/Hero'
 import PopularRoutes from '@/components/PopularRoutes'
 import CustomTripPlanner from '@/components/CustomTripPlanner'
 import VehicleModal from '@/components/VehicleModal'
+import MobileBottomNav from '@/components/MobileBottomNav'
 import { type Route, PHONE_NUMBER, PHONE_RAW, WHATSAPP_NUMBER } from '@/lib/data'
 import { MessageCircle, Phone, MapPin } from 'lucide-react'
 
@@ -153,7 +154,7 @@ export default function Home() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-surface-border py-7 px-4 sm:px-6 lg:px-8 mb-14 md:mb-0 bg-white">
+      <footer className="border-t border-surface-border py-7 px-4 sm:px-6 lg:px-8 mb-24 md:mb-0 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-ink-muted text-xs">
           <p>© 2025 Galaxy Travels. All rights reserved.</p>
           <p>Dehradun, Uttarakhand · Premium Hill Cab Service</p>
@@ -170,6 +171,8 @@ export default function Home() {
         onClose={() => setIsModalOpen(false)}
         bookingDetails={bookingDetails}
       />
+
+      <MobileBottomNav onBook={() => setIsModalOpen(true)} />
     </main>
   )
 }
