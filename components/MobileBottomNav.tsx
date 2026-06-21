@@ -39,7 +39,7 @@ export default function MobileBottomNav() {
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <nav className="flex items-center bg-white rounded-full border border-surface-border shadow-[0_8px_32px_rgba(0,0,0,0.16),0_2px_8px_rgba(0,0,0,0.08)]" style={{ height: 64 }}>
+      <nav className="flex items-center bg-white rounded-full border border-surface-border px-1 shadow-[0_8px_32px_rgba(0,0,0,0.16),0_2px_8px_rgba(0,0,0,0.08)]" style={{ height: 64 }}>
         {TABS.map((tab) => {
           const Icon = tab.icon
           const isActive = active === tab.id
@@ -48,7 +48,7 @@ export default function MobileBottomNav() {
               key={tab.id}
               onClick={() => scrollTo(tab.href, tab.id)}
               className="flex flex-col items-center justify-center gap-1 transition-colors"
-              style={{ width: 74, height: 64 }}
+              style={{ width: 68, height: 64 }}
             >
               <Icon size={22} className={isActive ? 'text-brand-dark' : 'text-ink-muted'} strokeWidth={isActive ? 2.2 : 1.8} />
               <span className={`text-[11px] font-semibold tracking-wide ${isActive ? 'text-brand-dark' : 'text-ink-muted'}`}>
@@ -65,7 +65,7 @@ export default function MobileBottomNav() {
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
           }}
           className="flex flex-col items-center justify-center gap-1"
-          style={{ width: 74, height: 64 }}
+          style={{ width: 68, height: 64 }}
           aria-label="WhatsApp"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366">
