@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MapPin, CalendarDays, Car, Loader2 } from 'lucide-react'
+import { MapPin, CalendarDays, Car, Loader2, Users } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/lib/data'
 
 const CAB_TYPES = ['Select type', 'Hatchback', 'Sedan', 'SUV']
@@ -11,6 +11,7 @@ export default function BookingBar() {
   const [dropoff,     setDropoff]     = useState('')
   const [date,        setDate]        = useState('')
   const [cabType,     setCabType]     = useState('Select type')
+  const [passengers,  setPassengers]  = useState('')
   const [isDetecting, setIsDetecting] = useState(false)
   const [errors,      setErrors]      = useState<Record<string, boolean>>({})
   const [showCallback, setShowCallback] = useState(false)
@@ -43,7 +44,7 @@ export default function BookingBar() {
     if (Object.keys(errs).length) return
 
     const msg = encodeURIComponent(
-      `Hi Asif, I want to book a cab.\nPickup: ${pickup}\nDrop: ${dropoff}\nDate: ${date}\nCab type: ${cabType === 'Select type' ? 'Any' : cabType}`
+      `Hi Asif, I want to book a cab.\nPickup: ${pickup}\nDrop: ${dropoff}\nDate: ${date}\nPassengers: ${passengers || 'Not specified'}\nCab type: ${cabType === 'Select type' ? 'Any' : cabType}`
     )
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
   }
@@ -103,6 +104,12 @@ export default function BookingBar() {
                 {CAB_TYPES.map(t => <option key={t}>{t}</option>)}
               </select>
             </Field>
+            <div className="w-px h-10 bg-surface-border shrink-0" />
+
+            <Field icon={<Users size={15} className="text-brand-light" />} label="Passengers">
+              <input type="number" min={1} max={12} value={passengers} onChange={e => setPassengers(e.target.value)}
+                placeholder="How many?" className={fieldCls('passengers')} />
+            </Field>
           </div>
 
           {/* Mobile stacked */}
@@ -128,6 +135,12 @@ export default function BookingBar() {
                 className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none cursor-pointer">
                 {CAB_TYPES.map(t => <option key={t}>{t}</option>)}
               </select>
+            </MobileField>
+
+            <MobileField icon={<Users size={14} className="text-brand-light" />} label="Passengers">
+              <input type="number" min={1} max={12} value={passengers} onChange={e => setPassengers(e.target.value)}
+                placeholder="How many?"
+                className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light" />
             </MobileField>
           </div>
 
