@@ -6,6 +6,7 @@ export interface Route {
   startingPrice: number
   distance: string
   highlight: string
+  asifTip: string
 }
 
 export interface Vehicle {
@@ -17,6 +18,7 @@ export interface Vehicle {
   hillReady: boolean
   pricePerKm: number
   emoji: string
+  bestFor: string
 }
 
 export const ROUTES: Route[] = [
@@ -28,6 +30,7 @@ export const ROUTES: Route[] = [
     startingPrice: 2800,
     distance: '290 km',
     highlight: 'Queen of Hills',
+    asifTip: 'Best October to March. I know every shortcut.',
   },
   {
     id: 'rishikesh',
@@ -37,6 +40,7 @@ export const ROUTES: Route[] = [
     startingPrice: 3200,
     distance: '240 km',
     highlight: 'Yoga Capital of the World',
+    asifTip: 'Early morning start beats the pilgrim traffic.',
   },
   {
     id: 'haridwar',
@@ -46,6 +50,7 @@ export const ROUTES: Route[] = [
     startingPrice: 2600,
     distance: '210 km',
     highlight: 'Gateway to the Gods',
+    asifTip: 'Plan around Ganga Aarti timing for the full experience.',
   },
   {
     id: 'chopta',
@@ -55,6 +60,7 @@ export const ROUTES: Route[] = [
     startingPrice: 4500,
     distance: '390 km',
     highlight: 'Mini Switzerland of India',
+    asifTip: 'Snow possible Nov–Feb. SUV is the safe choice.',
   },
 ]
 
@@ -68,6 +74,7 @@ export const VEHICLES: Vehicle[] = [
     hillReady: false,
     pricePerKm: 12,
     emoji: '🚗',
+    bestFor: 'Budget solo or couple trips on shorter routes.',
   },
   {
     id: 'sedan',
@@ -78,6 +85,7 @@ export const VEHICLES: Vehicle[] = [
     hillReady: true,
     pricePerKm: 14,
     emoji: '🚕',
+    bestFor: 'Families and small groups on most Himalayan routes.',
   },
   {
     id: 'suv',
@@ -88,16 +96,10 @@ export const VEHICLES: Vehicle[] = [
     hillReady: true,
     pricePerKm: 18,
     emoji: '🚙',
+    bestFor: 'Large groups, snow routes, or luggage-heavy trips.',
   },
 ]
 
 export const WHATSAPP_NUMBER = '919876543210'
 export const PHONE_NUMBER = '+91 98765 43210'
 export const PHONE_RAW = '+919876543210'
-
-export const TRUST_SIGNALS = [
-  { label: 'Hill-Expert Drivers', icon: '🏔️', desc: '10+ years mountain driving experience' },
-  { label: 'Sanitized Cabs', icon: '✨', desc: 'Deep cleaned before every trip' },
-  { label: 'GPS Tracked', icon: '📍', desc: 'Real-time tracking for your safety' },
-  { label: '24/7 Support', icon: '📞', desc: 'Always available, day or night' },
-]

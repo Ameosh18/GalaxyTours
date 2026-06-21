@@ -4,17 +4,13 @@ import { useEffect, useState } from 'react'
 import { Home, IndianRupee, Car, Phone } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/lib/data'
 
-interface MobileBottomNavProps {
-  onBook: () => void
-}
-
 const TABS = [
-  { id: 'home',    label: 'Home',    icon: Home,          href: '#home' },
-  { id: 'pricing', label: 'Pricing', icon: IndianRupee,   href: '#pricing' },
-  { id: 'contact', label: 'Contact', icon: Phone,          href: '#contact' },
+  { id: 'home',    label: 'Home',    icon: Home,        href: '#home' },
+  { id: 'pricing', label: 'Pricing', icon: IndianRupee, href: '#pricing' },
+  { id: 'contact', label: 'Contact', icon: Phone,       href: '#contact' },
 ]
 
-export default function MobileBottomNav({ onBook }: MobileBottomNavProps) {
+export default function MobileBottomNav() {
   const [active, setActive] = useState('home')
 
   useEffect(() => {
@@ -44,52 +40,30 @@ export default function MobileBottomNav({ onBook }: MobileBottomNavProps) {
     >
       <nav className="flex items-center bg-white rounded-full border border-surface-border shadow-[0_8px_32px_rgba(0,0,0,0.16),0_2px_8px_rgba(0,0,0,0.08)]" style={{ height: 72 }}>
 
-        {/* Home */}
-        <TabButton
-          tab={TABS[0]}
-          active={active === 'home'}
-          onClick={() => scrollTo('#home', 'home')}
-        />
+        <TabButton tab={TABS[0]} active={active === 'home'}    onClick={() => scrollTo('#home', 'home')} />
+        <TabButton tab={TABS[1]} active={active === 'pricing'} onClick={() => scrollTo('#pricing', 'pricing')} />
 
-        {/* Pricing */}
-        <TabButton
-          tab={TABS[1]}
-          active={active === 'pricing'}
-          onClick={() => scrollTo('#pricing', 'pricing')}
-        />
-
-        {/* Book — elevated center CTA */}
+        {/* Book — elevated center CTA, scrolls to booking section */}
         <button
-          onClick={onBook}
+          onClick={() => document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' })}
           className="relative flex flex-col items-center justify-center"
           style={{ width: 74 }}
           aria-label="Book a cab"
         >
-          {/* Outer halo ring */}
-          <span
-            className="absolute rounded-full bg-white border border-surface-border"
-            style={{ width: 72, height: 72, top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-          />
-          {/* Inner circle */}
-          <span
-            className="relative z-10 rounded-full bg-brand-dark flex items-center justify-center shadow-btn"
-            style={{ width: 52, height: 52 }}
-          >
+          <span className="absolute rounded-full bg-white border border-surface-border"
+            style={{ width: 72, height: 72, top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+          <span className="relative z-10 rounded-full bg-brand-dark flex items-center justify-center shadow-btn"
+            style={{ width: 52, height: 52 }}>
             <Car size={24} className="text-white" />
           </span>
         </button>
 
-        {/* Contact */}
-        <TabButton
-          tab={TABS[2]}
-          active={active === 'contact'}
-          onClick={() => scrollTo('#contact', 'contact')}
-        />
+        <TabButton tab={TABS[2]} active={active === 'contact'} onClick={() => scrollTo('#contact', 'contact')} />
 
         {/* WhatsApp quick-dial */}
         <button
           onClick={() => {
-            const msg = encodeURIComponent('Hi Galaxy Travels, I want to book a cab.')
+            const msg = encodeURIComponent('Hi Asif, I want to book a cab.')
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
           }}
           className="flex flex-col items-center justify-center gap-1"
@@ -106,30 +80,12 @@ export default function MobileBottomNav({ onBook }: MobileBottomNavProps) {
   )
 }
 
-function TabButton({
-  tab,
-  active,
-  onClick,
-}: {
-  tab: typeof TABS[0]
-  active: boolean
-  onClick: () => void
-}) {
+function TabButton({ tab, active, onClick }: { tab: typeof TABS[0]; active: boolean; onClick: () => void }) {
   const Icon = tab.icon
   return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center justify-center gap-1 transition-colors"
-      style={{ width: 74, height: 72 }}
-    >
-      <Icon
-        size={24}
-        className={active ? 'text-brand-dark' : 'text-ink-muted'}
-        strokeWidth={active ? 2.2 : 1.8}
-      />
-      <span className={`text-[12px] font-semibold tracking-wide ${active ? 'text-brand-dark' : 'text-ink-muted'}`}>
-        {tab.label}
-      </span>
+    <button onClick={onClick} className="flex flex-col items-center justify-center gap-1 transition-colors" style={{ width: 74, height: 72 }}>
+      <Icon size={24} className={active ? 'text-brand-dark' : 'text-ink-muted'} strokeWidth={active ? 2.2 : 1.8} />
+      <span className={`text-[12px] font-semibold tracking-wide ${active ? 'text-brand-dark' : 'text-ink-muted'}`}>{tab.label}</span>
     </button>
   )
 }

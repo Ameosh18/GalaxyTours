@@ -1,52 +1,59 @@
 'use client'
 
-import { Users, Luggage, CheckCircle2 } from 'lucide-react'
-import type { Vehicle } from '@/lib/data'
+import { Users, Briefcase } from 'lucide-react'
+import { type Vehicle } from '@/lib/data'
+import { WHATSAPP_NUMBER } from '@/lib/data'
 
-interface VehicleCardProps {
-  vehicle: Vehicle
-  isSelected: boolean
-  onSelect: (vehicle: Vehicle) => void
-}
+export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
+  const handleBook = () => {
+    const msg = encodeURIComponent(`Hi Asif, I want to book a ${vehicle.type} (${vehicle.models.join(' / ')}).\nCapacity: ${vehicle.passengers} passengers\nRate: ₹${vehicle.pricePerKm}/km`)
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
+  }
 
-export default function VehicleCard({ vehicle, isSelected, onSelect }: VehicleCardProps) {
   return (
-    <button
-      onClick={() => onSelect(vehicle)}
-      className={`relative w-full text-left rounded-2xl p-5 border-2 transition-all duration-200 ${
-        isSelected
-          ? 'border-brand-dark bg-brand-50 shadow-btn'
-          : 'border-surface-border bg-white hover:border-brand-sage hover:bg-brand-50/40'
-      }`}
-    >
-      {vehicle.hillReady && (
-        <span className="absolute top-3 right-3 bg-brand-dark text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-          Hill-Ready
-        </span>
-      )}
-      {isSelected && (
-        <CheckCircle2 size={16} className="absolute top-3 left-3 text-brand-dark" />
-      )}
-
-      <div className="flex items-start gap-4 mt-1">
-        <span className="text-4xl" role="img" aria-label={vehicle.type}>{vehicle.emoji}</span>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-display font-bold text-ink-dark text-[15px]">{vehicle.type}</h3>
-          <p className="text-ink-muted text-xs mt-0.5">{vehicle.models.join(' / ')}</p>
-          <div className="flex gap-4 mt-2.5">
-            <span className="flex items-center gap-1 text-[11px] text-ink-muted">
-              <Users size={11} className="text-brand-mid" /> {vehicle.passengers} passengers
-            </span>
-            <span className="flex items-center gap-1 text-[11px] text-ink-muted">
-              <Luggage size={11} className="text-brand-mid" /> {vehicle.luggage}
-            </span>
+    <div className="card rounded-2xl p-6 flex flex-col gap-4 hover:shadow-card-hover transition-shadow">
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-2xl">{vehicle.emoji}</span>
+            <h3 className="font-display font-bold text-ink-dark text-[1.2rem]">{vehicle.type}</h3>
           </div>
+          <p className="text-ink-muted text-[12px]">{vehicle.models.join(' / ')}</p>
         </div>
-        <div className="text-right shrink-0">
-          <p className="text-brand-dark font-bold text-sm">₹{vehicle.pricePerKm}/km</p>
-          <p className="text-ink-light text-[10px] mt-0.5">onwards</p>
-        </div>
+        {vehicle.hillReady && (
+          <span className="text-[10px] font-bold text-brand-dark bg-brand-dark/10 px-2.5 py-1 rounded-full shrink-0">
+            Hill-Ready
+          </span>
+        )}
       </div>
-    </button>
+
+      {/* Specs */}
+      <div className="flex gap-4">
+        <span className="flex items-center gap-1.5 text-ink-muted text-[12px]">
+          <Users size={13} className="text-brand-light" /> {vehicle.passengers} pax
+        </span>
+        <span className="flex items-center gap-1.5 text-ink-muted text-[12px]">
+          <Briefcase size={13} className="text-brand-light" /> {vehicle.luggage}
+        </span>
+      </div>
+
+      {/* Best for */}
+      <p className="text-ink-muted text-[12.5px] italic border-l-2 border-brand-light/30 pl-3">
+        {vehicle.bestFor}
+      </p>
+
+      {/* Price + CTA */}
+      <div className="flex items-center justify-between pt-2 border-t border-surface-border">
+        <div>
+          <p className="text-[10px] text-ink-muted uppercase tracking-wider">Rate</p>
+          <p className="font-bold text-ink-dark text-[1.2rem]">₹{vehicle.pricePerKm}<span className="text-ink-muted font-normal text-[12px]">/km</span></p>
+        </div>
+        <button onClick={handleBook}
+          className="rounded-full bg-brand-dark text-white px-5 py-2 text-[13px] font-semibold shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all">
+          Book this →
+        </button>
+      </div>
+    </div>
   )
 }
