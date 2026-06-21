@@ -11,7 +11,15 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   }
 
   return (
-    <div className="card rounded-2xl p-6 flex flex-col gap-4 hover:shadow-card-hover transition-shadow">
+    <div className="card rounded-2xl overflow-hidden flex flex-col hover:shadow-card-hover transition-shadow">
+      {/* Vehicle image */}
+      {vehicle.image && (
+        <div className="w-full h-40 bg-surface-off overflow-hidden">
+          <img src={vehicle.image} alt={vehicle.type} className="w-full h-full object-cover" loading="lazy" />
+        </div>
+      )}
+
+      <div className="p-6 flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -53,6 +61,7 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           className="rounded-full bg-brand-dark text-white px-5 py-2 text-[13px] font-semibold shadow-btn hover:shadow-btn-hover hover:bg-brand-mid transition-all">
           Book this →
         </button>
+      </div>
       </div>
     </div>
   )

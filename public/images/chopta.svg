@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a4e"/>
+      <stop offset="40%" stop-color="#3d5a8a"/>
+      <stop offset="75%" stop-color="#7a9fc2"/>
+      <stop offset="100%" stop-color="#c8dff0"/>
+    </linearGradient>
+    <linearGradient id="snow1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#ddeeff"/>
+      <stop offset="100%" stop-color="#a8c5d8"/>
+    </linearGradient>
+    <linearGradient id="snow2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0f8ff"/>
+      <stop offset="50%" stop-color="#c8dff0"/>
+      <stop offset="100%" stop-color="#8fb3cc"/>
+    </linearGradient>
+    <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a7c59"/>
+      <stop offset="100%" stop-color="#2d5a3d"/>
+    </linearGradient>
+    <linearGradient id="snow3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#b8d4e8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="800" height="500" fill="url(#sky)"/>
+
+  <!-- Stars -->
+  <circle cx="80" cy="40" r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="180" cy="25" r="1" fill="white" opacity="0.8"/>
+  <circle cx="300" cy="55" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="450" cy="30" r="1" fill="white" opacity="0.9"/>
+  <circle cx="550" cy="60" r="2" fill="white" opacity="0.8"/>
+  <circle cx="680" cy="35" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="750" cy="55" r="1" fill="white" opacity="0.9"/>
+  <circle cx="120" cy="80" r="1" fill="white" opacity="0.6"/>
+  <circle cx="380" cy="70" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="620" cy="80" r="1" fill="white" opacity="0.7"/>
+
+  <!-- Moon -->
+  <circle cx="680" cy="70" r="28" fill="#ffeebb" opacity="0.95" filter="url(#glow)"/>
+  <circle cx="693" cy="62" r="24" fill="#3d5a8a" opacity="0.3"/>
+
+  <!-- Far back mountains (dark blue-purple) -->
+  <polygon points="0,280 80,180 160,240 220,160 300,220 350,150 430,210 500,140 570,200 650,160 730,220 800,170 800,320 0,320" fill="#2a3a5e" opacity="0.7"/>
+
+  <!-- Middle mountains with snow caps -->
+  <polygon points="-20,320 60,200 130,270 200,180 280,250 350,160 420,240 490,170 560,240 640,175 720,240 800,200 800,340 0,340" fill="#3a5070"/>
+  <!-- Snow on middle mountains -->
+  <polygon points="60,200 80,215 100,205 130,270 115,255 80,220 60,200" fill="url(#snow3)" opacity="0.8"/>
+  <polygon points="200,180 220,195 240,185 280,250 260,235 225,200 200,180" fill="url(#snow3)" opacity="0.8"/>
+  <polygon points="350,160 375,178 395,165 420,240 400,225 370,185 350,160" fill="url(#snow3)" opacity="0.9"/>
+  <polygon points="490,170 515,190 535,175 560,240 540,225 510,195 490,170" fill="url(#snow3)" opacity="0.8"/>
+  <polygon points="640,175 665,195 685,180 720,240 700,225 660,200 640,175" fill="url(#snow3)" opacity="0.8"/>
+
+  <!-- Main foreground peaks (dramatic, large) -->
+  <polygon points="-20,380 100,240 200,320 300,220 400,310 500,200 600,295 700,215 800,280 800,420 0,420" fill="#1e3a52"/>
+  <!-- Snow caps on main peaks -->
+  <polygon points="100,240 130,265 160,248 200,320 175,295 130,270 100,240" fill="url(#snow1)" opacity="0.95"/>
+  <polygon points="300,220 335,248 365,230 400,310 370,280 335,255 300,220" fill="url(#snow1)" opacity="0.95"/>
+  <polygon points="500,200 540,232 570,212 600,295 570,268 535,240 500,200" fill="url(#snow1)" opacity="0.95"/>
+  <polygon points="700,215 730,242 760,225 800,280 770,260 730,248 700,215" fill="url(#snow1)" opacity="0.9"/>
+
+  <!-- Snow on ground / meadow with snow -->
+  <ellipse cx="400" cy="440" rx="500" ry="80" fill="url(#meadow)"/>
+  <!-- Snow patches on meadow -->
+  <ellipse cx="150" cy="435" rx="120" ry="25" fill="white" opacity="0.6"/>
+  <ellipse cx="450" cy="450" rx="150" ry="20" fill="white" opacity="0.5"/>
+  <ellipse cx="700" cy="440" rx="100" ry="18" fill="white" opacity="0.55"/>
+  <ellipse cx="620" cy="460" rx="80" ry="14" fill="white" opacity="0.4"/>
+
+  <!-- Pine trees (silhouettes) -->
+  <!-- Left group -->
+  <polygon points="40,390 55,340 70,390" fill="#1a3025"/>
+  <polygon points="55,395 72,338 89,395" fill="#1a3025"/>
+  <polygon points="30,400 47,350 64,400" fill="#1a3025"/>
+  <!-- Center-left -->
+  <polygon points="220,395 238,342 256,395" fill="#1a3025"/>
+  <polygon points="235,400 252,345 269,400" fill="#1a3025"/>
+  <!-- Right group -->
+  <polygon points="660,390 675,338 690,390" fill="#1a3025"/>
+  <polygon points="675,395 692,340 709,395" fill="#1a3025"/>
+  <polygon points="700,388 717,340 734,388" fill="#1a3025"/>
+
+  <!-- Small temple/shrine silhouette -->
+  <rect x="370" y="370" width="12" height="30" fill="#0f1e16"/>
+  <polygon points="364,370 376,358 388,370" fill="#0f1e16"/>
+  <rect x="373" y="355" width="6" height="5" fill="#0f1e16"/>
+
+  <!-- Foreground snow ground -->
+  <ellipse cx="400" cy="490" rx="520" ry="50" fill="white" opacity="0.15"/>
+
+  <!-- Light ray / aurora hint -->
+  <polygon points="500,0 480,160 520,160" fill="white" opacity="0.04"/>
+  <polygon points="400,0 375,180 425,180" fill="#aaddff" opacity="0.05"/>
+</svg>

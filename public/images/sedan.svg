@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0f4e8"/>
+      <stop offset="100%" stop-color="#d8e8c8"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2980b9"/>
+      <stop offset="100%" stop-color="#1a5f8a"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3498db"/>
+      <stop offset="100%" stop-color="#2980b9"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7dc8ee" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#aee6ff" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="wheel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#555"/>
+      <stop offset="100%" stop-color="#222"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#00000028"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="260" fill="url(#bg)"/>
+
+  <!-- Hills background -->
+  <polygon points="0,145 70,95 150,130 240,80 330,115 400,90 400,160 0,160" fill="#a8c8a0" opacity="0.45"/>
+  <polygon points="0,155 90,110 180,145 270,105 360,135 400,120 400,165 0,165" fill="#88aa88" opacity="0.35"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="208" rx="140" ry="14" fill="#00000020"/>
+
+  <!-- Car body (sedan - longer, lower roofline) -->
+  <g filter="url(#shadow)">
+    <!-- Lower body (longer) -->
+    <rect x="48" y="155" width="304" height="44" rx="7" fill="url(#body)"/>
+    <!-- Trunk/boot (flat sedan) -->
+    <path d="M295,155 L355,155 L355,168 L305,172 Z" fill="#1a5f8a"/>
+    <!-- Rear -->
+    <path d="M105,155 L50,155 L48,168 L100,172 Z" fill="#1a5f8a"/>
+
+    <!-- Roof (lower, more swept) -->
+    <path d="M120,155 L145,118 L265,118 L300,155 Z" fill="url(#roof)"/>
+
+    <!-- Front hood (long) -->
+    <path d="M300,155 L358,158 L355,170 L300,172 Z" fill="#1a6090"/>
+    <!-- Front grille area -->
+    <rect x="352" y="158" width="16" height="20" rx="3" fill="#0d3a5a"/>
+    <!-- Grille lines -->
+    <line x1="356" y1="161" x2="365" y2="161" stroke="#aaa" stroke-width="1.5"/>
+    <line x1="356" y1="165" x2="365" y2="165" stroke="#aaa" stroke-width="1.5"/>
+    <line x1="356" y1="169" x2="365" y2="169" stroke="#aaa" stroke-width="1.5"/>
+
+    <!-- Headlight -->
+    <ellipse cx="356" cy="163" rx="9" ry="6" fill="#fff9c4"/>
+    <ellipse cx="356" cy="163" rx="6" ry="4" fill="#ffee44"/>
+
+    <!-- Rear bumper -->
+    <rect x="38" y="166" width="14" height="20" rx="3" fill="#888"/>
+    <!-- Tail light -->
+    <rect x="44" y="155" width="10" height="16" rx="2" fill="#ff3333"/>
+    <rect x="44" y="168" width="10" height="8" rx="1" fill="#ffaa00"/>
+
+    <!-- Windshield (front, swept) -->
+    <path d="M265,120 L298,154 L255,154 L264,120 Z" fill="url(#glass)" opacity="0.88"/>
+    <path d="M270,123 L282,145 L264,145 Z" fill="white" opacity="0.28"/>
+
+    <!-- Rear window -->
+    <path d="M135,120 L108,154 L150,154 L143,120 Z" fill="url(#glass)" opacity="0.88"/>
+
+    <!-- Side windows (3 — classic sedan shape) -->
+    <rect x="158" y="122" width="44" height="30" rx="3" fill="url(#glass)" opacity="0.88"/>
+    <rect x="208" y="122" width="40" height="30" rx="3" fill="url(#glass)" opacity="0.88"/>
+
+    <!-- Door lines -->
+    <line x1="205" y1="120" x2="205" y2="198" stroke="#1060a0" stroke-width="1.5"/>
+    <line x1="252" y1="120" x2="252" y2="198" stroke="#1060a0" stroke-width="1.5"/>
+    <!-- Door handles -->
+    <rect x="170" y="162" width="16" height="5" rx="2.5" fill="#ddd"/>
+    <rect x="220" y="162" width="16" height="5" rx="2.5" fill="#ddd"/>
+    <rect x="263" y="162" width="16" height="5" rx="2.5" fill="#ddd"/>
+
+    <!-- Wheels -->
+    <circle cx="115" cy="199" r="29" fill="url(#wheel)"/>
+    <circle cx="115" cy="199" r="21" fill="#777"/>
+    <circle cx="115" cy="199" r="13" fill="#444"/>
+    <circle cx="115" cy="199" r="5" fill="#bbb"/>
+    <line x1="115" y1="180" x2="115" y2="218" stroke="#666" stroke-width="2.5"/>
+    <line x1="96" y1="199" x2="134" y2="199" stroke="#666" stroke-width="2.5"/>
+    <line x1="102" y1="186" x2="128" y2="212" stroke="#666" stroke-width="2.5"/>
+    <line x1="128" y1="186" x2="102" y2="212" stroke="#666" stroke-width="2.5"/>
+
+    <circle cx="295" cy="199" r="29" fill="url(#wheel)"/>
+    <circle cx="295" cy="199" r="21" fill="#777"/>
+    <circle cx="295" cy="199" r="13" fill="#444"/>
+    <circle cx="295" cy="199" r="5" fill="#bbb"/>
+    <line x1="295" y1="180" x2="295" y2="218" stroke="#666" stroke-width="2.5"/>
+    <line x1="276" y1="199" x2="314" y2="199" stroke="#666" stroke-width="2.5"/>
+    <line x1="282" y1="186" x2="308" y2="212" stroke="#666" stroke-width="2.5"/>
+    <line x1="308" y1="186" x2="282" y2="212" stroke="#666" stroke-width="2.5"/>
+
+    <!-- Antenna -->
+    <line x1="148" y1="118" x2="148" y2="96" stroke="#1a5f8a" stroke-width="2"/>
+    <circle cx="148" cy="95" r="2" fill="#aaa"/>
+  </g>
+
+  <text x="200" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#1a5f8a" opacity="0.85">Sedan · Dzire / Etios</text>
+</svg>

@@ -19,13 +19,14 @@ export interface Vehicle {
   pricePerKm: number
   emoji: string
   bestFor: string
+  image?: string
 }
 
 export const ROUTES: Route[] = [
   {
     id: 'mussoorie',
     name: 'Mussoorie',
-    image: '/images/mussoorie.jpg',
+    image: '/images/mussoorie.svg',
     travelTime: '4–5 hrs',
     startingPrice: 2800,
     distance: '290 km',
@@ -35,7 +36,7 @@ export const ROUTES: Route[] = [
   {
     id: 'rishikesh',
     name: 'Rishikesh',
-    image: '/images/rishikesh.jpg',
+    image: '/images/rishikesh.svg',
     travelTime: '5–6 hrs',
     startingPrice: 3200,
     distance: '240 km',
@@ -45,7 +46,7 @@ export const ROUTES: Route[] = [
   {
     id: 'haridwar',
     name: 'Haridwar',
-    image: '/images/haridwar.jpg',
+    image: '/images/haridwar.svg',
     travelTime: '4–5 hrs',
     startingPrice: 2600,
     distance: '210 km',
@@ -55,7 +56,7 @@ export const ROUTES: Route[] = [
   {
     id: 'chopta',
     name: 'Chopta',
-    image: '/images/chopta.jpg',
+    image: '/images/chopta.svg',
     travelTime: '7–8 hrs',
     startingPrice: 4500,
     distance: '390 km',
@@ -75,6 +76,7 @@ export const VEHICLES: Vehicle[] = [
     pricePerKm: 12,
     emoji: '🚗',
     bestFor: 'Budget solo or couple trips on shorter routes.',
+    image: '/images/hatchback.svg',
   },
   {
     id: 'sedan',
@@ -86,6 +88,7 @@ export const VEHICLES: Vehicle[] = [
     pricePerKm: 14,
     emoji: '🚕',
     bestFor: 'Families and small groups on most Himalayan routes.',
+    image: '/images/sedan.svg',
   },
   {
     id: 'suv',
@@ -97,6 +100,7 @@ export const VEHICLES: Vehicle[] = [
     pricePerKm: 18,
     emoji: '🚙',
     bestFor: 'Large groups, snow routes, or luggage-heavy trips.',
+    image: '/images/suv.svg',
   },
 ]
 

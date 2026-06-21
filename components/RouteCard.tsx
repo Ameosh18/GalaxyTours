@@ -24,18 +24,32 @@ export default function RouteCard({ route }: { route: RouteType }) {
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className={`relative rounded-2xl overflow-hidden bg-gradient-to-br ${gradient} h-72 flex flex-col justify-between cursor-pointer`}
+      className={`relative rounded-2xl overflow-hidden h-72 flex flex-col justify-between cursor-pointer`}
       onClick={handleBook}
     >
+      {/* Background image with gradient fallback */}
+      {route.image ? (
+        <img
+          src={route.image}
+          alt={route.name}
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+      )}
+      {/* Darkening overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/70" />
+
       {/* Highlight pill */}
-      <div className="m-4">
-        <span className="text-[10px] font-bold tracking-widest uppercase text-white/70 bg-white/10 px-3 py-1 rounded-full">
+      <div className="relative m-4">
+        <span className="text-[10px] font-bold tracking-widest uppercase text-white/90 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
           {route.highlight}
         </span>
       </div>
 
       {/* Bottom content */}
-      <div className="bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 pt-12">
+      <div className="relative bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 pt-12">
         <h3 className="font-display font-bold text-white text-[1.5rem] leading-tight">{route.name}</h3>
 
         <div className="flex items-center gap-4 mt-1.5 mb-3">
