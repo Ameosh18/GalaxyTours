@@ -100,6 +100,6 @@ export const VEHICLES: Vehicle[] = [
   },
 ]
 
-export const WHATSAPP_NUMBER = '919876543210'
-export const PHONE_NUMBER = '+91 98765 43210'
-export const PHONE_RAW = '+919876543210'
+export const WHATSAPP_NUMBER = '918433130989'
+export const PHONE_NUMBER = '+91 84331 30989'
+export const PHONE_RAW = '+918433130989'
