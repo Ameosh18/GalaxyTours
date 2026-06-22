@@ -334,7 +334,7 @@ function SuggestionDropdown({
   if (!show || (!loading && suggestions.length === 0)) return null
 
   return (
-    <ul className={`absolute left-0 right-0 top-full mt-1 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-surface-border overflow-hidden z-50 ${mobile ? 'text-xs' : 'text-[13px]'}`}>
+    <ul className={`absolute left-0 top-full mt-1 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-surface-border overflow-hidden z-50 ${mobile ? 'w-64 text-xs' : 'w-72 text-[13px]'}`}>
       {loading && (
         <li className="flex items-center gap-2 px-4 py-3 text-ink-muted">
           <Loader2 size={13} className="animate-spin text-brand-light shrink-0" />
@@ -349,7 +349,7 @@ function SuggestionDropdown({
             className="w-full text-left px-4 py-2.5 hover:bg-surface-off flex items-start gap-2.5 transition-colors"
           >
             <MapPin size={12} className="text-brand-light shrink-0 mt-0.5" />
-            <span className="text-ink-dark leading-snug line-clamp-2">{formatSuggestion(s.display_name)}</span>
+            <span className="text-ink-dark leading-snug">{formatSuggestion(s.display_name)}</span>
           </button>
         </li>
       ))}
@@ -358,8 +358,12 @@ function SuggestionDropdown({
 }
 
 function formatSuggestion(raw: string): string {
-  const parts = raw.split(',').map(s => s.trim()).filter(Boolean)
-  if (parts.length <= 2) return raw
+  const parts = raw
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s && !/^\d+$/.test(s)) // drop pure numeric parts (pin codes)
+  if (parts.length <= 2) return parts.join(', ')
+  // first segment + state + country (last two)
   return [parts[0], parts[parts.length - 2], parts[parts.length - 1]].join(', ')
 }
 
