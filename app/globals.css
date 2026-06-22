@@ -4,12 +4,12 @@
 
 @layer base {
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
 
   body {
     background-color: #F8FAF9;
     color: #374151;
-    overflow-x: hidden;
+    overflow-x: clip; /* clip > hidden — doesn't break position:sticky/fixed */
   }
 
   /* Skip-to-content link (WCAG 2.4.1) */

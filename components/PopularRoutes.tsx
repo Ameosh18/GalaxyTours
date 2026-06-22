@@ -1,10 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ROUTES, WHATSAPP_NUMBER } from '@/lib/data'
 import RouteCard from './RouteCard'
 
 export default function PopularRoutes() {
+  const reduced = useReducedMotion()
   const handleCustom = () => {
     const msg = encodeURIComponent('Hi Asif, I need a custom trip. My destination: ')
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
@@ -15,8 +16,8 @@ export default function PopularRoutes() {
       <div className="max-w-6xl mx-auto px-4">
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 24 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
           <p className="text-[11px] font-bold tracking-[0.28em] uppercase text-brand-light mb-3">Where Asif Takes You</p>
@@ -28,8 +29,9 @@ export default function PopularRoutes() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
           {ROUTES.map((route, i) => (
             <motion.div key={route.id}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}
+              initial={{ opacity: 0, y: reduced ? 0 : 32 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, delay: reduced ? 0 : i * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <RouteCard route={route} />
             </motion.div>

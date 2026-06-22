@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const TESTIMONIALS = [
   {
@@ -27,13 +27,14 @@ const TESTIMONIALS = [
 ]
 
 export default function SocialProof() {
+  const reduced = useReducedMotion()
   return (
     <section id="testimonials" className="py-16 md:py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 24 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
           <p className="text-[11px] font-bold tracking-[0.28em] uppercase text-brand-light mb-3">Traveller Reviews</p>
@@ -45,8 +46,9 @@ export default function SocialProof() {
           {TESTIMONIALS.map((t, i) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}
+              initial={{ opacity: 0, y: reduced ? 0 : 28 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, delay: reduced ? 0 : i * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className="snap-start shrink-0 w-[80vw] md:w-auto rounded-2xl overflow-hidden shadow-card border border-surface-border"
             >
               {/* WhatsApp-style header */}

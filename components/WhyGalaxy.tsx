@@ -1,39 +1,27 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { UserCheck, Mountain, BadgeCheck, Sparkles } from 'lucide-react'
 
 const POINTS = [
-  {
-    icon: UserCheck,
-    title: 'You talk directly to Asif',
-    desc: 'No call centre, no middleman. The owner picks up.',
-  },
-  {
-    icon: Mountain,
-    title: 'Hill-expert drivers',
-    desc: 'Years of experience on Himalayan roads, every season.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Transparent pricing',
-    desc: 'What we quote is what you pay. No surprises.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Sanitised, well-maintained cabs',
-    desc: 'Deep cleaned before every trip.',
-  },
+  { icon: UserCheck,  title: 'You talk directly to Asif',     desc: 'No call centre, no middleman. The owner picks up.' },
+  { icon: Mountain,   title: 'Hill-expert drivers',            desc: 'Years of experience on Himalayan roads, every season.' },
+  { icon: BadgeCheck, title: 'Transparent pricing',           desc: 'What we quote is what you pay. No surprises.' },
+  { icon: Sparkles,   title: 'Sanitised, well-maintained cabs', desc: 'Deep cleaned before every trip.' },
 ]
 
 export default function WhyGalaxy() {
+  const reduced = useReducedMotion()
+
   return (
     <section id="why" className="py-16 md:py-20 bg-surface-off">
       <div className="max-w-6xl mx-auto px-4">
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-12"
         >
           <p className="text-[11px] font-bold tracking-[0.28em] uppercase text-brand-light mb-3">Why Choose Us</p>
@@ -46,13 +34,18 @@ export default function WhyGalaxy() {
             return (
               <motion.div
                 key={point.title}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}
+                initial={{ opacity: 0, y: reduced ? 0 : 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, delay: reduced ? 0 : i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col items-center text-center gap-3"
               >
-                <div className="w-14 h-14 rounded-2xl bg-brand-dark/10 flex items-center justify-center">
+                <motion.div
+                  whileHover={reduced ? {} : { rotate: [0, -8, 8, -4, 0], transition: { duration: 0.5 } }}
+                  className="w-14 h-14 rounded-2xl bg-brand-dark/10 flex items-center justify-center cursor-default"
+                >
                   <Icon size={28} className="text-brand-light" strokeWidth={1.6} />
-                </div>
+                </motion.div>
                 <h3 className="font-display font-bold text-ink-dark text-[15px] leading-snug">{point.title}</h3>
                 <p className="text-ink-muted text-[13px] leading-relaxed">{point.desc}</p>
               </motion.div>

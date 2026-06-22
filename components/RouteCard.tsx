@@ -5,6 +5,7 @@ import { Clock, Route } from 'lucide-react'
 import { type Route as RouteType } from '@/lib/data'
 import { WHATSAPP_NUMBER } from '@/lib/data'
 import { asset } from '@/lib/asset'
+import { useReducedMotion } from 'framer-motion'
 
 const GRADIENTS: Record<string, string> = {
   mussoorie: 'from-emerald-700 via-teal-800 to-slate-900',
@@ -14,6 +15,7 @@ const GRADIENTS: Record<string, string> = {
 }
 
 export default function RouteCard({ route }: { route: RouteType }) {
+  const reduced = useReducedMotion()
   const handleBook = () => {
     const msg = encodeURIComponent(`Hi Asif, I want to book a cab to ${route.name}.\nPickup: Dehradun\nDrop: ${route.name}\nStarting price: ₹${route.startingPrice.toLocaleString('en-IN')}`)
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank', 'noopener,noreferrer')
@@ -23,9 +25,9 @@ export default function RouteCard({ route }: { route: RouteType }) {
 
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.02 }}
-      transition={{ duration: 0.2 }}
-      className={`relative rounded-2xl overflow-hidden h-72 flex flex-col justify-between cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-dark focus-visible:outline-none`}
+      whileHover={reduced ? {} : { y: -5, scale: 1.02 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      className="relative rounded-2xl overflow-hidden h-72 flex flex-col justify-between cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-dark focus-visible:outline-none group"
       onClick={handleBook}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleBook() }}
       role="button"
@@ -37,7 +39,7 @@ export default function RouteCard({ route }: { route: RouteType }) {
         <img
           src={asset(route.image)}
           alt={route.name}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
       ) : (
