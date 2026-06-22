@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable} scroll-smooth`}>
       <body className="bg-surface-off text-ink-body font-sans min-h-screen antialiased">
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         {children}
       </body>
     </html>

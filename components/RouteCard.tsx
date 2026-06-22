@@ -24,8 +24,12 @@ export default function RouteCard({ route }: { route: RouteType }) {
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className={`relative rounded-2xl overflow-hidden h-72 flex flex-col justify-between cursor-pointer`}
+      className={`relative rounded-2xl overflow-hidden h-72 flex flex-col justify-between cursor-pointer focus-visible:ring-2 focus-visible:ring-brand-dark focus-visible:outline-none`}
       onClick={handleBook}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleBook() }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Book cab to ${route.name} — from ₹${route.startingPrice.toLocaleString('en-IN')}`}
     >
       {/* Background image with gradient fallback */}
       {route.image ? (

@@ -149,8 +149,10 @@ export default function BookingBar() {
               <Field
                 icon={isDetecting ? <Loader2 size={15} className="animate-spin text-brand-light" /> : <MapPin size={15} className="text-brand-light" />}
                 label="Pickup"
+                id="pickup-input"
               >
                 <input
+                  id="pickup-input"
                   type="text"
                   value={pickup}
                   onChange={e => { setPickup(e.target.value); setActiveField('pickup') }}
@@ -158,6 +160,8 @@ export default function BookingBar() {
                   placeholder="Dehradun"
                   className={fieldCls('pickup')}
                   autoComplete="off"
+                  aria-autocomplete="list"
+                  aria-expanded={activeField === 'pickup' && pickupSug.suggestions.length > 0}
                 />
               </Field>
               <SuggestionDropdown
@@ -172,8 +176,9 @@ export default function BookingBar() {
 
             {/* Drop with suggestions */}
             <div className="relative flex-1 min-w-0">
-              <Field icon={<MapPin size={15} className="text-brand-light" />} label="Drop" error={errors.dropoff}>
+              <Field icon={<MapPin size={15} className="text-brand-light" />} label="Drop" error={errors.dropoff} id="dropoff-input">
                 <input
+                  id="dropoff-input"
                   type="text"
                   value={dropoff}
                   onChange={e => { setDropoff(e.target.value); setActiveField('dropoff'); setErrors(p => ({...p, dropoff: false})) }}
@@ -181,6 +186,10 @@ export default function BookingBar() {
                   placeholder={errors.dropoff ? 'Required' : 'Where to?'}
                   className={fieldCls('dropoff')}
                   autoComplete="off"
+                  aria-required="true"
+                  aria-invalid={errors.dropoff}
+                  aria-autocomplete="list"
+                  aria-expanded={activeField === 'dropoff' && dropoffSug.suggestions.length > 0}
                 />
               </Field>
               <SuggestionDropdown
@@ -369,12 +378,15 @@ function formatSuggestion(raw: string): string {
 
 // ── Layout helpers ────────────────────────────────────────────────────────────
 
-function Field({ icon, label, error, children }: { icon: React.ReactNode; label: string; error?: boolean; children: React.ReactNode }) {
+function Field({ icon, label, error, children, id }: { icon: React.ReactNode; label: string; error?: boolean; children: React.ReactNode; id?: string }) {
   return (
     <div className="flex items-center gap-3 flex-1 min-w-0 px-5 py-2">
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${error ? 'bg-red-50' : 'bg-surface-input'}`}>{icon}</div>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${error ? 'bg-red-50' : 'bg-surface-input'}`} aria-hidden="true">{icon}</div>
       <div className="min-w-0 flex-1">
-        <p className={`text-[10px] font-semibold uppercase tracking-widest mb-0.5 ${error ? 'text-red-400' : 'text-ink-muted'}`}>{error ? 'Required' : label}</p>
+        {id
+          ? <label htmlFor={id} className={`block text-[10px] font-semibold uppercase tracking-widest mb-0.5 ${error ? 'text-red-400' : 'text-ink-muted'}`}>{error ? 'Required' : label}</label>
+          : <p className={`text-[10px] font-semibold uppercase tracking-widest mb-0.5 ${error ? 'text-red-400' : 'text-ink-muted'}`}>{error ? 'Required' : label}</p>
+        }
         {children}
       </div>
     </div>

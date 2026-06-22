@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <SocialProof />
         <BookingBar />
