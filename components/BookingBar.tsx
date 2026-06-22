@@ -145,7 +145,7 @@ export default function BookingBar() {
           <div className="hidden md:flex items-center gap-0 bg-white rounded-full border border-surface-border px-2 py-2 mb-6">
 
             {/* Pickup with suggestions */}
-            <div className="relative flex-1">
+            <div className="relative flex-1 min-w-0">
               <Field
                 icon={isDetecting ? <Loader2 size={15} className="animate-spin text-brand-light" /> : <MapPin size={15} className="text-brand-light" />}
                 label="Pickup"
@@ -171,7 +171,7 @@ export default function BookingBar() {
             <div className="w-px h-10 bg-surface-border shrink-0" />
 
             {/* Drop with suggestions */}
-            <div className="relative flex-1">
+            <div className="relative flex-1 min-w-0">
               <Field icon={<MapPin size={15} className="text-brand-light" />} label="Drop" error={errors.dropoff}>
                 <input
                   type="text"
@@ -371,7 +371,7 @@ function formatSuggestion(raw: string): string {
 
 function Field({ icon, label, error, children }: { icon: React.ReactNode; label: string; error?: boolean; children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 px-5 py-2 w-full">
+    <div className="flex items-center gap-3 flex-1 min-w-0 px-5 py-2">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${error ? 'bg-red-50' : 'bg-surface-input'}`}>{icon}</div>
       <div className="min-w-0 flex-1">
         <p className={`text-[10px] font-semibold uppercase tracking-widest mb-0.5 ${error ? 'text-red-400' : 'text-ink-muted'}`}>{error ? 'Required' : label}</p>
