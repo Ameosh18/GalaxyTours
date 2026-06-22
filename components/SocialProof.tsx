@@ -41,8 +41,9 @@ export default function SocialProof() {
           <h2 className="font-display font-bold text-ink-dark text-[1.9rem] md:text-[2.4rem]">What Travellers Say</h2>
         </motion.div>
 
-        {/* Mobile: horizontal scroll carousel */}
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+        {/* Mobile: horizontal scroll carousel — outer clips overflow so page doesn't scroll horizontally */}
+        <div className="overflow-x-hidden md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
           {TESTIMONIALS.map((t, i) => (
             <motion.div
               key={t.name}
@@ -70,6 +71,7 @@ export default function SocialProof() {
               </div>
             </motion.div>
           ))}
+        </div>
         </div>
 
       </div>

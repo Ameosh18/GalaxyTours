@@ -49,6 +49,18 @@
     opacity: 0.5;
     cursor: pointer;
   }
+
+  /*
+   * Prevent iOS Safari from zooming on input focus (triggers when font-size < 16px).
+   * On mobile we lock inputs to 16px. On md+ Tailwind's text-* classes take over.
+   */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
 }
 
 @layer components {
@@ -82,6 +94,13 @@
 }
 
 @layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
   .text-gradient-green {
     background: linear-gradient(135deg, #1B4332, #40916C);
     -webkit-background-clip: text;

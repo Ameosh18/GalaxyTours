@@ -343,7 +343,7 @@ function SuggestionDropdown({
   if (!show || (!loading && suggestions.length === 0)) return null
 
   return (
-    <ul className={`absolute left-0 top-full mt-1 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-surface-border overflow-hidden z-50 ${mobile ? 'w-64 text-xs' : 'w-72 text-[13px]'}`}>
+    <ul className={`absolute left-0 top-full mt-1 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-surface-border overflow-hidden z-50 ${mobile ? 'w-[calc(100vw-2rem)] max-w-xs text-xs' : 'w-72 text-[13px]'}`}>
       {loading && (
         <li className="flex items-center gap-2 px-4 py-3 text-ink-muted">
           <Loader2 size={13} className="animate-spin text-brand-light shrink-0" />
