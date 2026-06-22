@@ -3,6 +3,7 @@
 import { Users, Briefcase } from 'lucide-react'
 import { type Vehicle } from '@/lib/data'
 import { WHATSAPP_NUMBER } from '@/lib/data'
+import { asset } from '@/lib/asset'
 
 export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   const handleBook = () => {
@@ -15,7 +16,7 @@ export default function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
       {/* Vehicle image */}
       {vehicle.image && (
         <div className="w-full h-40 bg-surface-off overflow-hidden">
-          <img src={vehicle.image} alt={vehicle.type} className="w-full h-full object-cover" loading="lazy" />
+          <img src={asset(vehicle.image)} alt={vehicle.type} className="w-full h-full object-cover" loading="lazy" />
         </div>
       )}
 

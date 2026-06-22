@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Clock, Route } from 'lucide-react'
 import { type Route as RouteType } from '@/lib/data'
 import { WHATSAPP_NUMBER } from '@/lib/data'
+import { asset } from '@/lib/asset'
 
 const GRADIENTS: Record<string, string> = {
   mussoorie: 'from-emerald-700 via-teal-800 to-slate-900',
@@ -34,7 +35,7 @@ export default function RouteCard({ route }: { route: RouteType }) {
       {/* Background image with gradient fallback */}
       {route.image ? (
         <img
-          src={route.image}
+          src={asset(route.image)}
           alt={route.name}
           className="absolute inset-0 w-full h-full object-cover"
           loading="lazy"
