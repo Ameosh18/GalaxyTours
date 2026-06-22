@@ -24,6 +24,16 @@ export interface Vehicle {
 
 export const ROUTES: Route[] = [
   {
+    id: 'manali',
+    name: 'Manali',
+    image: '/images/manali.svg',
+    travelTime: '10–12 hrs',
+    startingPrice: 7500,
+    distance: '510 km',
+    highlight: 'Valley of the Gods',
+    asifTip: 'Book SUV for Rohtang Pass. I\'ve done this route 200+ times.',
+  },
+  {
     id: 'mussoorie',
     name: 'Mussoorie',
     image: '/images/mussoorie.svg',
@@ -62,16 +72,6 @@ export const ROUTES: Route[] = [
     distance: '390 km',
     highlight: 'Mini Switzerland of India',
     asifTip: 'Snow possible Nov–Feb. SUV is the safe choice.',
-  },
-  {
-    id: 'manali',
-    name: 'Manali',
-    image: '/images/manali.svg',
-    travelTime: '10–12 hrs',
-    startingPrice: 7500,
-    distance: '510 km',
-    highlight: 'Valley of the Gods',
-    asifTip: 'Book SUV for Rohtang Pass. I\'ve done this route 200+ times.',
   },
 ]
 
