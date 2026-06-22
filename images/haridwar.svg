@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f0c29"/>
+      <stop offset="40%" stop-color="#302b63"/>
+      <stop offset="100%" stop-color="#e8612c"/>
+    </linearGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF9500" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0096C7" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="ghat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A853"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+    <linearGradient id="temple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#CC4400"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="100%" stop-color="#FF9500" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Night sky with sunset -->
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <!-- Stars -->
+  <circle cx="100" cy="50" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="200" cy="30" r="1" fill="white" opacity="0.7"/>
+  <circle cx="350" cy="60" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="500" cy="40" r="1" fill="white" opacity="0.8"/>
+  <circle cx="650" cy="25" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="750" cy="55" r="1" fill="white" opacity="0.6"/>
+  <!-- Temple silhouettes on hill -->
+  <path d="M0,280 Q100,240 200,260 Q300,230 400,255 Q500,235 600,260 Q700,240 800,255 L800,500 L0,500Z" fill="#1a0a00" opacity="0.8"/>
+  <!-- Har Ki Pauri Ghats -->
+  <rect x="0" y="340" width="800" height="20" fill="url(#ghat)"/>
+  <rect x="0" y="358" width="800" height="15" fill="#C9A227" opacity="0.8"/>
+  <rect x="0" y="371" width="800" height="12" fill="#B8860B" opacity="0.7"/>
+  <!-- River -->
+  <path d="M0,383 Q200,370 400,376 Q600,368 800,375 L800,500 L0,500Z" fill="url(#river)"/>
+  <!-- Reflection of lamps on water -->
+  <g opacity="0.6">
+    <ellipse cx="150" cy="420" rx="40" ry="8" fill="#FF9500"/>
+    <ellipse cx="300" cy="430" rx="35" ry="7" fill="#FFD166"/>
+    <ellipse cx="500" cy="415" rx="45" ry="9" fill="#FF9500"/>
+    <ellipse cx="650" cy="425" rx="38" ry="8" fill="#FFD166"/>
+  </g>
+  <!-- Floating diyas (lamps) on water -->
+  <g>
+    <circle cx="120" cy="395" r="4" fill="#FFE066"/>
+    <circle cx="120" cy="395" r="12" fill="url(#lamp)"/>
+    <circle cx="280" cy="388" r="4" fill="#FFE066"/>
+    <circle cx="280" cy="388" r="12" fill="url(#lamp)"/>
+    <circle cx="450" cy="392" r="4" fill="#FFE066"/>
+    <circle cx="450" cy="392" r="12" fill="url(#lamp)"/>
+    <circle cx="580" cy="386" r="4" fill="#FFE066"/>
+    <circle cx="580" cy="386" r="12" fill="url(#lamp)"/>
+    <circle cx="710" cy="390" r="4" fill="#FFE066"/>
+    <circle cx="710" cy="390" r="12" fill="url(#lamp)"/>
+  </g>
+  <!-- Temple spires silhouette -->
+  <g fill="#FF6B35" opacity="0.9">
+    <polygon points="200,260 210,210 220,260"/>
+    <polygon points="215,260 228,195 241,260"/>
+    <polygon points="238,260 247,220 256,260"/>
+    <polygon points="540,255 552,200 564,255"/>
+    <polygon points="558,255 570,188 582,255"/>
+    <polygon points="578,255 587,215 596,255"/>
+  </g>
+  <!-- Priests silhouettes at ghat -->
+  <g fill="#1a0a00">
+    <ellipse cx="100" cy="355" rx="6" ry="14"/>
+    <ellipse cx="130" cy="358" rx="6" ry="12"/>
+    <ellipse cx="400" cy="352" rx="6" ry="15"/>
+    <ellipse cx="430" cy="356" rx="5" ry="13"/>
+    <ellipse cx="700" cy="354" rx="6" ry="14"/>
+  </g>
+</svg>
