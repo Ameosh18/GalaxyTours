@@ -1,28 +1,73 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { MapPin, CalendarDays, Car, Loader2, Users } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/lib/data'
 
 const CAB_TYPES = ['Select type', 'Hatchback', 'Sedan', 'SUV']
 
+interface Suggestion {
+  display_name: string
+  place_id: number
+}
+
+function useLocationSuggestions(query: string) {
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+  const [loading, setLoading]         = useState(false)
+  const timerRef                       = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const q = query.trim()
+    if (q.length < 2) { setSuggestions([]); return }
+
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(async () => {
+      setLoading(true)
+      try {
+        const res  = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=6&countrycodes=in&addressdetails=1`,
+          { headers: { 'Accept-Language': 'en' } }
+        )
+        const data: Suggestion[] = await res.json()
+        setSuggestions(data)
+      } catch {
+        setSuggestions([])
+      } finally {
+        setLoading(false)
+      }
+    }, 350)
+
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [query])
+
+  const clear = useCallback(() => setSuggestions([]), [])
+  return { suggestions, loading, clear }
+}
+
 export default function BookingBar() {
-  const [pickup,      setPickup]      = useState('Dehradun')
-  const [dropoff,     setDropoff]     = useState('')
-  const [date,        setDate]        = useState('')
-  const [cabType,     setCabType]     = useState('Select type')
-  const [passengers,  setPassengers]  = useState('')
-  const [isDetecting, setIsDetecting] = useState(false)
-  const [errors,      setErrors]      = useState<Record<string, boolean>>({})
+  const [pickup,       setPickup]      = useState('Dehradun')
+  const [dropoff,      setDropoff]     = useState('')
+  const [date,         setDate]        = useState('')
+  const [cabType,      setCabType]     = useState('Select type')
+  const [passengers,   setPassengers]  = useState('')
+  const [isDetecting,  setIsDetecting] = useState(false)
+  const [errors,       setErrors]      = useState<Record<string, boolean>>({})
   const [showCallback, setShowCallback] = useState(false)
-  const [cbName,      setCbName]      = useState('')
-  const [cbPhone,     setCbPhone]     = useState('')
+  const [cbName,       setCbName]      = useState('')
+  const [cbPhone,      setCbPhone]     = useState('')
+
+  // Track which field is actively being typed in for suggestions
+  const [activeField, setActiveField] = useState<'pickup' | 'dropoff' | null>(null)
+
+  const pickupSug  = useLocationSuggestions(activeField === 'pickup'  ? pickup  : '')
+  const dropoffSug = useLocationSuggestions(activeField === 'dropoff' ? dropoff : '')
 
   const today = new Date().toISOString().split('T')[0]
 
   const detectLocation = () => {
     if (!('geolocation' in navigator)) return
     setIsDetecting(true)
+    setActiveField(null)
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
@@ -35,6 +80,25 @@ export default function BookingBar() {
       () => setIsDetecting(false)
     )
   }
+
+  const chooseSuggestion = (field: 'pickup' | 'dropoff', value: string) => {
+    const short = formatSuggestion(value)
+    if (field === 'pickup')  { setPickup(short);  pickupSug.clear()  }
+    else                     { setDropoff(short); dropoffSug.clear(); setErrors(p => ({...p, dropoff: false})) }
+    setActiveField(null)
+  }
+
+  // Close suggestions on outside click
+  const containerRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setActiveField(null)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   const handleWhatsApp = () => {
     const errs: Record<string, boolean> = {}
@@ -75,21 +139,58 @@ export default function BookingBar() {
           <p className="text-ink-muted text-[15px] mt-2">Fill in your details and reach Asif in one tap.</p>
         </div>
 
-        <div className="glass-bar rounded-2xl shadow-bar p-6 md:p-8">
+        <div className="glass-bar rounded-2xl shadow-bar p-6 md:p-8" ref={containerRef}>
 
           {/* Desktop pill row */}
           <div className="hidden md:flex items-center gap-0 bg-white rounded-full border border-surface-border px-2 py-2 mb-6">
 
-            <Field icon={isDetecting ? <Loader2 size={15} className="animate-spin text-brand-light" /> : <MapPin size={15} className="text-brand-light" />} label="Pickup">
-              <input type="text" value={pickup} onChange={e => setPickup(e.target.value)} onClick={detectLocation}
-                placeholder="Dehradun" className={fieldCls('pickup')} />
-            </Field>
+            {/* Pickup with suggestions */}
+            <div className="relative flex-1">
+              <Field
+                icon={isDetecting ? <Loader2 size={15} className="animate-spin text-brand-light" /> : <MapPin size={15} className="text-brand-light" />}
+                label="Pickup"
+              >
+                <input
+                  type="text"
+                  value={pickup}
+                  onChange={e => { setPickup(e.target.value); setActiveField('pickup') }}
+                  onFocus={() => { setActiveField('pickup'); if (!pickup) detectLocation() }}
+                  placeholder="Dehradun"
+                  className={fieldCls('pickup')}
+                  autoComplete="off"
+                />
+              </Field>
+              <SuggestionDropdown
+                suggestions={pickupSug.suggestions}
+                loading={pickupSug.loading}
+                show={activeField === 'pickup'}
+                onSelect={v => chooseSuggestion('pickup', v)}
+              />
+            </div>
+
             <div className="w-px h-10 bg-surface-border shrink-0" />
 
-            <Field icon={<MapPin size={15} className="text-brand-light" />} label="Drop" error={errors.dropoff}>
-              <input type="text" value={dropoff} onChange={e => { setDropoff(e.target.value); setErrors(p => ({...p, dropoff: false})) }}
-                placeholder={errors.dropoff ? 'Required' : 'Where to?'} className={fieldCls('dropoff')} />
-            </Field>
+            {/* Drop with suggestions */}
+            <div className="relative flex-1">
+              <Field icon={<MapPin size={15} className="text-brand-light" />} label="Drop" error={errors.dropoff}>
+                <input
+                  type="text"
+                  value={dropoff}
+                  onChange={e => { setDropoff(e.target.value); setActiveField('dropoff'); setErrors(p => ({...p, dropoff: false})) }}
+                  onFocus={() => setActiveField('dropoff')}
+                  placeholder={errors.dropoff ? 'Required' : 'Where to?'}
+                  className={fieldCls('dropoff')}
+                  autoComplete="off"
+                />
+              </Field>
+              <SuggestionDropdown
+                suggestions={dropoffSug.suggestions}
+                loading={dropoffSug.loading}
+                show={activeField === 'dropoff'}
+                onSelect={v => chooseSuggestion('dropoff', v)}
+              />
+            </div>
+
             <div className="w-px h-10 bg-surface-border shrink-0" />
 
             <Field icon={<CalendarDays size={15} className="text-brand-light" />} label="Date" error={errors.date}>
@@ -114,16 +215,53 @@ export default function BookingBar() {
 
           {/* Mobile stacked */}
           <div className="md:hidden grid grid-cols-2 gap-3 mb-5">
-            <MobileField icon={isDetecting ? <Loader2 size={14} className="animate-spin text-brand-light" /> : <MapPin size={14} className="text-brand-light" />} label="Pickup" onClick={detectLocation}>
-              <input type="text" value={pickup} onChange={e => setPickup(e.target.value)}
-                placeholder="Dehradun" className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light" />
-            </MobileField>
 
-            <MobileField icon={<MapPin size={14} className={errors.dropoff ? 'text-red-400' : 'text-brand-light'} />} label="Drop">
-              <input type="text" value={dropoff} onChange={e => { setDropoff(e.target.value); setErrors(p => ({...p, dropoff: false})) }}
-                placeholder={errors.dropoff ? 'Required' : 'Where to?'}
-                className={`block w-full text-xs font-semibold bg-transparent outline-none placeholder-ink-light ${errors.dropoff ? 'text-red-500' : 'text-ink-dark'}`} />
-            </MobileField>
+            {/* Pickup mobile */}
+            <div className="relative">
+              <MobileField
+                icon={isDetecting ? <Loader2 size={14} className="animate-spin text-brand-light" /> : <MapPin size={14} className="text-brand-light" />}
+                label="Pickup"
+              >
+                <input
+                  type="text"
+                  value={pickup}
+                  onChange={e => { setPickup(e.target.value); setActiveField('pickup') }}
+                  onFocus={() => setActiveField('pickup')}
+                  placeholder="Dehradun"
+                  className="block w-full text-xs font-semibold text-ink-dark bg-transparent outline-none placeholder-ink-light"
+                  autoComplete="off"
+                />
+              </MobileField>
+              <SuggestionDropdown
+                suggestions={pickupSug.suggestions}
+                loading={pickupSug.loading}
+                show={activeField === 'pickup'}
+                onSelect={v => chooseSuggestion('pickup', v)}
+                mobile
+              />
+            </div>
+
+            {/* Drop mobile */}
+            <div className="relative">
+              <MobileField icon={<MapPin size={14} className={errors.dropoff ? 'text-red-400' : 'text-brand-light'} />} label="Drop">
+                <input
+                  type="text"
+                  value={dropoff}
+                  onChange={e => { setDropoff(e.target.value); setActiveField('dropoff'); setErrors(p => ({...p, dropoff: false})) }}
+                  onFocus={() => setActiveField('dropoff')}
+                  placeholder={errors.dropoff ? 'Required' : 'Where to?'}
+                  className={`block w-full text-xs font-semibold bg-transparent outline-none placeholder-ink-light ${errors.dropoff ? 'text-red-500' : 'text-ink-dark'}`}
+                  autoComplete="off"
+                />
+              </MobileField>
+              <SuggestionDropdown
+                suggestions={dropoffSug.suggestions}
+                loading={dropoffSug.loading}
+                show={activeField === 'dropoff'}
+                onSelect={v => chooseSuggestion('dropoff', v)}
+                mobile
+              />
+            </div>
 
             <MobileField icon={<CalendarDays size={14} className={errors.date ? 'text-red-400' : 'text-brand-light'} />} label="Date">
               <input type="date" value={date} min={today} onChange={e => { setDate(e.target.value); setErrors(p => ({...p, date: false})) }}
@@ -182,9 +320,54 @@ export default function BookingBar() {
   )
 }
 
+// ── Suggestion dropdown ───────────────────────────────────────────────────────
+
+function SuggestionDropdown({
+  suggestions, loading, show, onSelect, mobile,
+}: {
+  suggestions: Suggestion[]
+  loading: boolean
+  show: boolean
+  onSelect: (value: string) => void
+  mobile?: boolean
+}) {
+  if (!show || (!loading && suggestions.length === 0)) return null
+
+  return (
+    <ul className={`absolute left-0 right-0 top-full mt-1 bg-white rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-surface-border overflow-hidden z-50 ${mobile ? 'text-xs' : 'text-[13px]'}`}>
+      {loading && (
+        <li className="flex items-center gap-2 px-4 py-3 text-ink-muted">
+          <Loader2 size={13} className="animate-spin text-brand-light shrink-0" />
+          Searching…
+        </li>
+      )}
+      {!loading && suggestions.map((s) => (
+        <li key={s.place_id}>
+          <button
+            type="button"
+            onMouseDown={e => { e.preventDefault(); onSelect(s.display_name) }}
+            className="w-full text-left px-4 py-2.5 hover:bg-surface-off flex items-start gap-2.5 transition-colors"
+          >
+            <MapPin size={12} className="text-brand-light shrink-0 mt-0.5" />
+            <span className="text-ink-dark leading-snug line-clamp-2">{formatSuggestion(s.display_name)}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function formatSuggestion(raw: string): string {
+  const parts = raw.split(',').map(s => s.trim()).filter(Boolean)
+  if (parts.length <= 2) return raw
+  return [parts[0], parts[parts.length - 2], parts[parts.length - 1]].join(', ')
+}
+
+// ── Layout helpers ────────────────────────────────────────────────────────────
+
 function Field({ icon, label, error, children }: { icon: React.ReactNode; label: string; error?: boolean; children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 flex-1 px-5 py-2">
+    <div className="flex items-center gap-3 px-5 py-2 w-full">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${error ? 'bg-red-50' : 'bg-surface-input'}`}>{icon}</div>
       <div className="min-w-0 flex-1">
         <p className={`text-[10px] font-semibold uppercase tracking-widest mb-0.5 ${error ? 'text-red-400' : 'text-ink-muted'}`}>{error ? 'Required' : label}</p>
@@ -196,7 +379,7 @@ function Field({ icon, label, error, children }: { icon: React.ReactNode; label:
 
 function MobileField({ icon, label, children, onClick }: { icon: React.ReactNode; label: string; children: React.ReactNode; onClick?: () => void }) {
   return (
-    <div className="flex items-center gap-2 bg-surface-input rounded-xl px-3 py-2.5 cursor-pointer" onClick={onClick}>
+    <div className="flex items-center gap-2 bg-surface-input rounded-xl px-3 py-2.5" onClick={onClick}>
       {icon}
       <div className="min-w-0 flex-1">
         <p className="text-[9px] font-semibold text-ink-muted uppercase tracking-wider">{label}</p>
