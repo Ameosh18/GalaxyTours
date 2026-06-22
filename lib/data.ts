@@ -63,6 +63,16 @@ export const ROUTES: Route[] = [
     highlight: 'Mini Switzerland of India',
     asifTip: 'Snow possible Nov–Feb. SUV is the safe choice.',
   },
+  {
+    id: 'manali',
+    name: 'Manali',
+    image: '/images/manali.svg',
+    travelTime: '10–12 hrs',
+    startingPrice: 7500,
+    distance: '510 km',
+    highlight: 'Valley of the Gods',
+    asifTip: 'Book SUV for Rohtang Pass. I\'ve done this route 200+ times.',
+  },
 ]
 
 export const VEHICLES: Vehicle[] = [

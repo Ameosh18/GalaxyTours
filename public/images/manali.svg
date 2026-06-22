@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="35%" stop-color="#2e4a7a"/>
+      <stop offset="65%" stop-color="#6a8fb5"/>
+      <stop offset="100%" stop-color="#b8d0e8"/>
+    </linearGradient>
+    <linearGradient id="peak1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#ddeeff"/>
+      <stop offset="100%" stop-color="#8aadcc"/>
+    </linearGradient>
+    <linearGradient id="peak2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0f8ff"/>
+      <stop offset="50%" stop-color="#c0d8f0"/>
+      <stop offset="100%" stop-color="#7a9db8"/>
+    </linearGradient>
+    <linearGradient id="valley" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a6b4a"/>
+      <stop offset="100%" stop-color="#1e3d28"/>
+    </linearGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4a90c8"/>
+      <stop offset="50%" stop-color="#6ab0e0"/>
+      <stop offset="100%" stop-color="#4a90c8"/>
+    </linearGradient>
+    <linearGradient id="rohtang" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f4ff"/>
+      <stop offset="100%" stop-color="#a0c4e0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="800" height="500" fill="url(#sky)"/>
+
+  <!-- Stars -->
+  <circle cx="60"  cy="30"  r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="150" cy="20"  r="1"   fill="white" opacity="0.8"/>
+  <circle cx="260" cy="45"  r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="400" cy="25"  r="1"   fill="white" opacity="0.9"/>
+  <circle cx="500" cy="50"  r="2"   fill="white" opacity="0.7"/>
+  <circle cx="620" cy="30"  r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="730" cy="45"  r="1"   fill="white" opacity="0.9"/>
+  <circle cx="100" cy="70"  r="1"   fill="white" opacity="0.6"/>
+  <circle cx="340" cy="60"  r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="680" cy="65"  r="1"   fill="white" opacity="0.8"/>
+
+  <!-- Moon -->
+  <circle cx="700" cy="60" r="22" fill="#ffeebb" opacity="0.92" filter="url(#glow)"/>
+  <circle cx="712" cy="53" r="18" fill="#2e4a7a" opacity="0.25"/>
+
+  <!-- Far background peaks (very distant, blue-grey) -->
+  <polygon points="0,260 50,190 110,240 180,170 260,225 340,160 420,215 500,155 580,210 660,158 740,205 800,170 800,290 0,290" fill="#2a3d5a" opacity="0.65"/>
+
+  <!-- Mid-ground: Rohtang Pass style ridge (left + center) -->
+  <polygon points="-10,300 60,210 130,265 220,185 310,250 390,175 470,240 550,178 640,235 720,178 800,220 800,320 0,320" fill="#3a5570" opacity="0.8"/>
+
+  <!-- Snow caps mid-ground -->
+  <polygon points="60,210  85,232  108,215 130,265 110,248  80,228  60,210"  fill="url(#rohtang)" opacity="0.85"/>
+  <polygon points="220,185 248,208 272,192 310,250 285,230 245,212 220,185" fill="url(#rohtang)" opacity="0.9"/>
+  <polygon points="390,175 420,200 445,183 470,240 445,218 415,205 390,175" fill="url(#rohtang)" opacity="0.9"/>
+  <polygon points="550,178 578,202 600,185 640,235 615,215 575,206 550,178" fill="url(#rohtang)" opacity="0.85"/>
+  <polygon points="720,178 748,200 768,185 800,220 778,208 744,204 720,178" fill="url(#rohtang)" opacity="0.8"/>
+
+  <!-- Main foreground peaks (dramatic, tall) -->
+  <polygon points="-10,360 80,230 170,310 270,210 380,300 470,195 570,290 670,210 760,270 810,230 810,380 0,380" fill="#1e3548"/>
+
+  <!-- Snow on main peaks -->
+  <polygon points="80,230  115,258  148,238  170,310 145,288  110,263  80,230"  fill="url(#peak1)" opacity="0.95"/>
+  <polygon points="270,210 305,240 335,220 380,300 350,275 302,246 270,210"    fill="url(#peak1)" opacity="0.95"/>
+  <polygon points="470,195 508,228 538,207 570,290 538,262 503,235 470,195"    fill="url(#peak1)" opacity="0.95"/>
+  <polygon points="670,210 702,238 728,220 760,270 732,248 698,242 670,210"    fill="url(#peak1)" opacity="0.9"/>
+
+  <!-- Valley / meadow -->
+  <ellipse cx="400" cy="435" rx="510" ry="85" fill="url(#valley)"/>
+
+  <!-- Beas River winding through valley -->
+  <path d="M 0,440 Q 100,425 200,438 Q 320,452 420,435 Q 520,418 640,432 Q 720,440 800,428" stroke="url(#river)" stroke-width="14" fill="none" opacity="0.7" stroke-linecap="round"/>
+  <path d="M 0,440 Q 100,425 200,438 Q 320,452 420,435 Q 520,418 640,432 Q 720,440 800,428" stroke="#8ecce8" stroke-width="5" fill="none" opacity="0.5" stroke-linecap="round"/>
+
+  <!-- Pine/deodar forest silhouettes -->
+  <!-- Left cluster -->
+  <polygon points="30,390  42,348  54,390"  fill="#0f2018"/>
+  <polygon points="45,395  57,350  69,395"  fill="#0f2018"/>
+  <polygon points="18,398  30,356  42,398"  fill="#0f2018"/>
+  <polygon points="60,392  72,352  84,392"  fill="#0f2018"/>
+
+  <!-- Centre-left cluster -->
+  <polygon points="190,392 202,350 214,392" fill="#0f2018"/>
+  <polygon points="205,388 217,346 229,388" fill="#0f2018"/>
+  <polygon points="175,395 187,355 199,395" fill="#0f2018"/>
+
+  <!-- Right cluster -->
+  <polygon points="630,390 642,348 654,390" fill="#0f2018"/>
+  <polygon points="645,394 657,352 669,394" fill="#0f2018"/>
+  <polygon points="660,390 672,350 684,390" fill="#0f2018"/>
+  <polygon points="675,393 687,353 699,393" fill="#0f2018"/>
+
+  <!-- Snow patches on valley floor -->
+  <ellipse cx="140" cy="445" rx="90"  ry="18" fill="white" opacity="0.35"/>
+  <ellipse cx="580" cy="448" rx="110" ry="16" fill="white" opacity="0.30"/>
+
+  <!-- Small mountain hut / chalet -->
+  <rect x="368" y="370" width="22" height="20" fill="#1a2c1e"/>
+  <polygon points="362,370 379,358 396,370" fill="#2a3d28"/>
+  <!-- Window glow -->
+  <rect x="372" y="376" width="6" height="7" fill="#ffe88a" opacity="0.85"/>
+  <rect x="382" y="376" width="6" height="7" fill="#ffe88a" opacity="0.85"/>
+
+  <!-- Mist / atmosphere layer at valley base -->
+  <rect x="0" y="420" width="800" height="40" fill="white" opacity="0.06"/>
+</svg>
